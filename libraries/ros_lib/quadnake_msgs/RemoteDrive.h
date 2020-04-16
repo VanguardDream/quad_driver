@@ -1,5 +1,5 @@
-#ifndef _ROS_quadnake_msgs_Drive_h
-#define _ROS_quadnake_msgs_Drive_h
+#ifndef _ROS_quadnake_msgs_RemoteDrive_h
+#define _ROS_quadnake_msgs_RemoteDrive_h
 
 #include <stdint.h>
 #include <string.h>
@@ -9,7 +9,7 @@
 namespace quadnake_msgs
 {
 
-  class Drive : public ros::Msg
+  class RemoteDrive : public ros::Msg
   {
     public:
       typedef uint8_t _MODE_type;
@@ -27,7 +27,7 @@ namespace quadnake_msgs
       typedef int8_t _PITCH_type;
       _PITCH_type PITCH;
 
-    Drive():
+    RemoteDrive():
       MODE(0),
       FORWARD_DRIVE(0),
       SIDE_DRIVE(0),
@@ -144,7 +144,7 @@ namespace quadnake_msgs
      return offset;
     }
 
-    const char * getType(){ return "quadnake_msgs/Drive"; };
+    const char * getType(){ return "quadnake_msgs/RemoteDrive"; };
     const char * getMD5(){ return "5e737f874edc3bdccfa477b32fe176b4"; };
 
   };
