@@ -24,6 +24,13 @@ class SensorReader
 {
 private:
     /* data */
+    cIMU class_imu;
+    OLLO class_ollo;
+
+    sensor_msgs::Imu msg_imu;
+    sensor_msgs::MagneticField msg_mag;
+    sensor_msgs::BatteryState msg_batt;
+
 public:
     SensorReader(/* args */);
     ~SensorReader();
@@ -37,10 +44,14 @@ public:
     /*Update IMU value*/
     void update_imu(void);
 
-    /*Format date to ROS IMU msg*/
+    /*Format data to ROS IMU msg*/
     sensor_msgs::Imu get_imu(void);
 
-    void
+    /*Calibrate gyro sensor*/
+    void calib_gyro(void);
+
+    /*Format data to ROS Magnetic msg*/
+    sensor_msgs::MagneticField get_mag(void);
 };
 
 #endif
