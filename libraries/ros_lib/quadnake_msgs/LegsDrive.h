@@ -14,18 +14,18 @@ namespace quadnake_msgs
   {
     public:
       quadnake_msgs::LegCommand legs[4];
-      typedef int8_t _ROLL_type;
-      _ROLL_type ROLL;
-      typedef int8_t _YAW_type;
-      _YAW_type YAW;
-      typedef int8_t _PITCH_type;
-      _PITCH_type PITCH;
+      typedef int8_t _roll_type;
+      _roll_type roll;
+      typedef int8_t _yaw_type;
+      _yaw_type yaw;
+      typedef int8_t _pitch_type;
+      _pitch_type pitch;
 
     LegsDrive():
       legs(),
-      ROLL(0),
-      YAW(0),
-      PITCH(0)
+      roll(0),
+      yaw(0),
+      pitch(0)
     {
     }
 
@@ -38,24 +38,24 @@ namespace quadnake_msgs
       union {
         int8_t real;
         uint8_t base;
-      } u_ROLL;
-      u_ROLL.real = this->ROLL;
-      *(outbuffer + offset + 0) = (u_ROLL.base >> (8 * 0)) & 0xFF;
-      offset += sizeof(this->ROLL);
+      } u_roll;
+      u_roll.real = this->roll;
+      *(outbuffer + offset + 0) = (u_roll.base >> (8 * 0)) & 0xFF;
+      offset += sizeof(this->roll);
       union {
         int8_t real;
         uint8_t base;
-      } u_YAW;
-      u_YAW.real = this->YAW;
-      *(outbuffer + offset + 0) = (u_YAW.base >> (8 * 0)) & 0xFF;
-      offset += sizeof(this->YAW);
+      } u_yaw;
+      u_yaw.real = this->yaw;
+      *(outbuffer + offset + 0) = (u_yaw.base >> (8 * 0)) & 0xFF;
+      offset += sizeof(this->yaw);
       union {
         int8_t real;
         uint8_t base;
-      } u_PITCH;
-      u_PITCH.real = this->PITCH;
-      *(outbuffer + offset + 0) = (u_PITCH.base >> (8 * 0)) & 0xFF;
-      offset += sizeof(this->PITCH);
+      } u_pitch;
+      u_pitch.real = this->pitch;
+      *(outbuffer + offset + 0) = (u_pitch.base >> (8 * 0)) & 0xFF;
+      offset += sizeof(this->pitch);
       return offset;
     }
 
@@ -68,32 +68,32 @@ namespace quadnake_msgs
       union {
         int8_t real;
         uint8_t base;
-      } u_ROLL;
-      u_ROLL.base = 0;
-      u_ROLL.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      this->ROLL = u_ROLL.real;
-      offset += sizeof(this->ROLL);
+      } u_roll;
+      u_roll.base = 0;
+      u_roll.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      this->roll = u_roll.real;
+      offset += sizeof(this->roll);
       union {
         int8_t real;
         uint8_t base;
-      } u_YAW;
-      u_YAW.base = 0;
-      u_YAW.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      this->YAW = u_YAW.real;
-      offset += sizeof(this->YAW);
+      } u_yaw;
+      u_yaw.base = 0;
+      u_yaw.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      this->yaw = u_yaw.real;
+      offset += sizeof(this->yaw);
       union {
         int8_t real;
         uint8_t base;
-      } u_PITCH;
-      u_PITCH.base = 0;
-      u_PITCH.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      this->PITCH = u_PITCH.real;
-      offset += sizeof(this->PITCH);
+      } u_pitch;
+      u_pitch.base = 0;
+      u_pitch.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      this->pitch = u_pitch.real;
+      offset += sizeof(this->pitch);
      return offset;
     }
 
     const char * getType(){ return "quadnake_msgs/LegsDrive"; };
-    const char * getMD5(){ return "9556b0c957d81310a1871634d3392d75"; };
+    const char * getMD5(){ return "4d958b491cbb2c0ebde8bf0d0c69af3c"; };
 
   };
 

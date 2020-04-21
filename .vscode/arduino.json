@@ -1,5 +1,6 @@
 {
     "board": "OpenCR:OpenCR:OpenCR",
     "configuration": "upload_method=UploadMethod",
-    "sketch": "quad_main.ino"
+    "sketch": "quad_main.ino",
+    "port": "/dev/ttyACM0"
 }
