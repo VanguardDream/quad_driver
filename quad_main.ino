@@ -21,22 +21,32 @@ void loop()
 {
     uint32_t t_boot = millis();
 
-    if (((t_boot - t_dead[0]) >= 200))
+    if (((t_boot - t_dead[0]) >= 100))
     {
-        char *logs;
-        char *num;
-
-        strcat(logs, "Task name : Sensor Read || Elapsed time :");
-        sprintf(num, "%d", sensor_read());
-        strcat(logs, num);
-        strcat(logs, "\n");
-
-        //nh.loginfo(logs);
+        uint32_t t_excution = sensor_read();
 
         t_dead[0] = t_boot;
     }
 
     nh.spinOnce();
+}
+void rosSerialLink(bool isConnected)
+{
+    static bool flag_wait = false;
+
+    if (isConnected)
+    {
+        if (!flag_wait)
+        {
+            delay(10);
+
+            flag_wait = true;
+        }
+        else
+        {
+            flag_wait = false;
+        }
+    }
 }
 
 uint32_t sensor_read(void)
@@ -47,27 +57,37 @@ uint32_t sensor_read(void)
 
     sr.update_imu();
 
-    msg_imu.header.stamp = nh.now();
+    ros::Time ros_Time = nh.now();
+
     msg_imu = sr.get_imu();
+    msg_imu.header.stamp.sec = ros_Time.sec;
+    msg_imu.header.stamp.nsec = ros_Time.nsec;
     msg_imu.header.frame_id = "imu_link";
 
     pub_imu.publish(&msg_imu);
 
-    msg_mag.header.stamp = nh.now();
-    msg_mag.header.frame_id = "mag_link";
-    msg_mag = sr.get_mag();
+    char loginfo[50];
+    sprintf(loginfo, "%d", ros_Time.nsec);
+    nh.loginfo(loginfo);
 
-    pub_mag.publish(&msg_mag);
+    // msg_mag.header.stamp = nh.now();
+    // msg_mag.header.frame_id = "mag_link";
+    // msg_mag = sr.get_mag();
+
+    // pub_mag.publish(&msg_mag);
 
     return (micros() - tick);
 }
 
-void remoteCallback(const quadnake_msgs::RemoteDrive &msg_remote)
+void remoteCallback(const quadnake_msgs::RemoteDrive &msg)
 {
-    cr.receiveCommand(msg_remote);
+    cr.receiveCommand(msg);
+    msg_remote = cr.getRemoteMsg();
 
     nh.loginfo("remote drive received!...");
+
     char *infos;
     sprintf(infos, "%d", msg_remote.FORWARD_DRIVE);
+
     nh.loginfo(infos);
 }
