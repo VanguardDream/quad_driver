@@ -16,7 +16,7 @@
 #define GYRO_FACTOR 0.0010642       // (ADC_Value/Scale) * (pi/180)             => Range : +- 2000[deg/s] \
                                     //                                             Scale : +- 16.4[deg/s]
 
-#define MAG_FACTOR 15e-8
+#define MAG_FACTOR 15e-8f
 
 #define DEBUG_SERIAL SerialBT2
 

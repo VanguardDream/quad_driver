@@ -2,7 +2,8 @@
 
 void setup()
 {
-    pinMode(13, OUTPUT);
+    pinMode(13, OUTPUT); //Arduino LED.
+    pinMode(22, OUTPUT); //LED USR 1.
 
     Serial4.begin(57600);
 
@@ -28,7 +29,16 @@ void loop()
         t_dead[0] = t_boot;
     }
 
+    if ((t_boot - t_dead[1] >= 500))
+    {
+        digitalWrite(13, HIGH - digitalRead(13));
+
+        t_dead[1] = t_boot;
+    }
+
     nh.spinOnce();
+
+    rosSerialLink(nh.connected());
 }
 void rosSerialLink(bool isConnected)
 {
@@ -38,6 +48,7 @@ void rosSerialLink(bool isConnected)
     {
         if (!flag_wait)
         {
+            digitalWrite(22, HIGH);
             delay(10);
 
             flag_wait = true;
@@ -47,34 +58,29 @@ void rosSerialLink(bool isConnected)
             flag_wait = false;
         }
     }
+    else
+    {
+        digitalWrite(22, LOW);
+    }
 }
 
 uint32_t sensor_read(void)
 {
-    digitalWrite(13, HIGH - digitalRead(13));
-
     uint32_t tick = micros();
 
     sr.update_imu();
 
-    ros::Time ros_Time = nh.now();
-
     msg_imu = sr.get_imu();
-    msg_imu.header.stamp.sec = ros_Time.sec;
-    msg_imu.header.stamp.nsec = ros_Time.nsec;
-    msg_imu.header.frame_id = "imu_link";
+    msg_imu.header.stamp = nh.now();
+    msg_imu.header.frame_id = "opencr_imu";
 
     pub_imu.publish(&msg_imu);
 
-    char loginfo[50];
-    sprintf(loginfo, "%d", ros_Time.nsec);
-    nh.loginfo(loginfo);
+    msg_mag = sr.get_mag();
+    msg_mag.header.stamp = nh.now();
+    msg_mag.header.frame_id = "opencr_mag";
 
-    // msg_mag.header.stamp = nh.now();
-    // msg_mag.header.frame_id = "mag_link";
-    // msg_mag = sr.get_mag();
-
-    // pub_mag.publish(&msg_mag);
+    pub_mag.publish(&msg_mag);
 
     return (micros() - tick);
 }
@@ -83,11 +89,10 @@ void remoteCallback(const quadnake_msgs::RemoteDrive &msg)
 {
     cr.receiveCommand(msg);
     msg_remote = cr.getRemoteMsg();
+}
 
-    nh.loginfo("remote drive received!...");
-
-    char *infos;
-    sprintf(infos, "%d", msg_remote.FORWARD_DRIVE);
-
-    nh.loginfo(infos);
+void legsDriveCallback(const quadnake_msgs::LegsDrive &msg)
+{
+    cr.receiveCommand(msg);
+    msg_legs = cr.getDriveMsg();
 }

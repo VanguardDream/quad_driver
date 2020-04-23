@@ -2,8 +2,6 @@
 #include <ros/time.h>
 
 #include <SensorReader.h>
-//#include <IMU.h>
-
 #include <CommandReceiver.h>
 
 uint32_t static t_dead[5];
@@ -39,11 +37,13 @@ uint32_t sensor_read(void);
 CommandReceiver cr;
 
 quadnake_msgs::RemoteDrive msg_remote;
-
-//ros::Subscriber < quadnake_msgs::LegsDrive> sub_legs();
+quadnake_msgs::LegsDrive msg_legs;
 
 //Functions
 void remoteCallback(const quadnake_msgs::RemoteDrive &msg);
 ros::Subscriber<quadnake_msgs::RemoteDrive> sub_remote("/message_sender/cmd_drive", remoteCallback);
+
+void legsDriveCallback(const quadnake_msgs::LegsDrive &msg);
+ros::Subscriber<quadnake_msgs::LegsDrive> sub_legs("", legsDriveCallback);
 
 /////////////////////////

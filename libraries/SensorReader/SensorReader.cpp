@@ -132,9 +132,9 @@ void SensorReader::calib_gyro(void)
 sensor_msgs::MagneticField SensorReader::get_mag(void)
 {
     /*MagneticField Values*/
-    msg_mag.magnetic_field.x = class_imu.SEN.magADC[0] * MAG_FACTOR;
-    msg_mag.magnetic_field.y = class_imu.SEN.magADC[1] * MAG_FACTOR;
-    msg_mag.magnetic_field.z = class_imu.SEN.magADC[2] * MAG_FACTOR;
+    msg_mag.magnetic_field.x = class_imu.SEN.magADC[0]; // * MAG_FACTOR;
+    msg_mag.magnetic_field.y = class_imu.SEN.magADC[1]; // * MAG_FACTOR;
+    msg_mag.magnetic_field.z = class_imu.SEN.magADC[2]; // * MAG_FACTOR;
 
     /*MagneticField Convariance Values*/
     msg_mag.magnetic_field_covariance[0] = 0.0048;
