@@ -16,6 +16,7 @@ void setup()
     nh.subscribe(sub_remote);
 
     sr.sr_init();
+    ld.legInit();
 }
 
 void loop()
@@ -29,11 +30,18 @@ void loop()
         t_dead[0] = t_boot;
     }
 
-    if ((t_boot - t_dead[1] >= 500))
+    if ((t_boot - t_dead[1]) >= 100)
+    {
+        ld.setGoalPos(0xFE, 2048 + msg_remote.SIDE_DRIVE * 10);
+
+        t_dead[1] = t_boot;
+    }
+
+    if ((t_boot - t_dead[2] >= 500))
     {
         digitalWrite(13, HIGH - digitalRead(13));
 
-        t_dead[1] = t_boot;
+        t_dead[2] = t_boot;
     }
 
     nh.spinOnce();

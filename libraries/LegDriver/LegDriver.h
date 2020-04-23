@@ -47,15 +47,31 @@
 #define QUAD_DXL_6_JOINT 6
 #define QUAD_DXL_7_JOINT 7
 #define QUAD_DXL_8_JOINT 8
-#define QUAD_LEG_IDS(A, B) (A * 10 + B)
+#define QUAD_LEG_ID(A, B) (A * 10 + B)
 
-class MotorDriver
+class LegDriver
 {
 private:
+    dynamixel::PortHandler *dxl_port;
+    dynamixel::PacketHandler *dxl_pack;
+
     /* data */
+    uint32_t baudrate;
+    float dxl_protocol_version;
+
+    uint8_t drive_mode;
+    uint8_t trough;
+    float amplitude;
+    float position;
+    float duty;
+    float velocity;
+
 public:
-    MotorDriver(/* args */);
-    ~MotorDriver();
+    LegDriver(/* args */);
+    ~LegDriver();
+    void legInit(void);
+    void setTorque(uint8_t dxl_id, bool onoff);
+    void setGoalPos(uint8_t dxl_id, uint32_t pos_value);
 };
 
 #endif //__MOTOR_DRIVER

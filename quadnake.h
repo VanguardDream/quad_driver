@@ -3,6 +3,7 @@
 
 #include <SensorReader.h>
 #include <CommandReceiver.h>
+#include <LegDriver.h>
 
 uint32_t static t_dead[5];
 
@@ -45,5 +46,10 @@ ros::Subscriber<quadnake_msgs::RemoteDrive> sub_remote("/message_sender/cmd_driv
 
 void legsDriveCallback(const quadnake_msgs::LegsDrive &msg);
 ros::Subscriber<quadnake_msgs::LegsDrive> sub_legs("", legsDriveCallback);
+
+/////////////////////////
+/* For Leg Driver*/
+
+LegDriver ld;
 
 /////////////////////////
