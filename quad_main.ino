@@ -96,7 +96,7 @@ uint32_t sensor_read(void)
 void remoteCallback(const quadnake_msgs::RemoteDrive &msg)
 {
     cr.receiveCommand(msg);
-    msg_remote = cr.getRemoteMsg();
+    //msg_remote = cr.getRemoteMsg();
 }
 
 void legsDriveCallback(const quadnake_msgs::LegsDrive &msg)

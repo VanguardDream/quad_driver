@@ -7,6 +7,8 @@
 
 uint32_t static t_dead[5];
 
+/* Quadnake Hardware Interface */
+
 /* For ROS interfacing */
 
 ros::NodeHandle nh;
