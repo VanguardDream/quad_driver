@@ -42,4 +42,6 @@ public:
     MotionGenerator(/* args */);
     ~MotionGenerator();
     void motionPlan(uint32_t t_init, const quadnake_msgs::RemoteDrive &msg);
+    void init(void);
+    uint16_t returnTheta1(void);
 };

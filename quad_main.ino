@@ -17,6 +17,7 @@ void setup()
 
     sr.sr_init();
     ld.legInit();
+    mg.init();
 }
 
 void loop()
@@ -42,6 +43,15 @@ void loop()
         digitalWrite(13, HIGH - digitalRead(13));
 
         t_dead[2] = t_boot;
+    }
+    if ((t_boot - t_dead[3] >= 1000))
+    {
+        mg.motionPlan(t_boot, msg_remote);
+        char *logmsg;
+        sprintf(logmsg, "%d", mg.returnTheta1());
+        nh.loginfo(logmsg);
+
+        t_dead[3] = t_boot;
     }
 
     nh.spinOnce();

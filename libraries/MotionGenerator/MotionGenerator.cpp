@@ -86,9 +86,18 @@ void MotionGenerator::motionPlan(uint32_t t_init, const quadnake_msgs::RemoteDri
 }
 MotionGenerator::MotionGenerator(/* args */)
 {
-    internal_ticks = 0;
 }
 
 MotionGenerator::~MotionGenerator()
 {
+}
+
+void MotionGenerator::init(void)
+{
+    internal_ticks = 0;
+}
+
+uint16_t MotionGenerator::returnTheta1(void)
+{
+    return qd_legs[0].v_theta[0];
 }

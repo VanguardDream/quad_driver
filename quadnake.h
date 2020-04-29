@@ -4,6 +4,7 @@
 #include <SensorReader.h>
 #include <CommandReceiver.h>
 #include <LegDriver.h>
+#include <MotionGenerator.h>
 
 uint32_t static t_dead[5];
 
@@ -57,4 +58,5 @@ LegDriver ld;
 /////////////////////////
 /* For Motion Generator */
 
+MotionGenerator mg;
 /////////////////////////
