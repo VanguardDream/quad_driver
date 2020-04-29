@@ -50,8 +50,11 @@ void legsDriveCallback(const quadnake_msgs::LegsDrive &msg);
 ros::Subscriber<quadnake_msgs::LegsDrive> sub_legs("", legsDriveCallback);
 
 /////////////////////////
-/* For Leg Driver*/
+/* For Leg Driver */
 
 LegDriver ld;
+
+/////////////////////////
+/* For Motion Generator */
 
 /////////////////////////
