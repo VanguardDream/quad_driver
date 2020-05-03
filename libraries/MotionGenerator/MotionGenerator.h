@@ -25,8 +25,8 @@ private:
         double v_theta[6];
         double h_theta[3];
 
-        leg() : leg_mode(0),
-                leg_troughs(1), leg_position(0), leg_velocity(0), leg_amplitude(0), leg_duty(0) {}
+        // leg() : leg_mode(0),
+        //         leg_troughs(1), leg_position(0), leg_velocity(0), leg_amplitude(0), leg_duty(0) {}
 
     } static qd_legs[4];
 

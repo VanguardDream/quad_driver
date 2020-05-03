@@ -7,10 +7,13 @@
                 "/home/bong/.arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/**",
                 "${workspaceFolder}/include/**",
                 "${workspaceFolder}/libraries/**",
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/Users/bong/Library/Arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/**",
+                "/Users/bong/Library/Arduino15/packages/OpenCR/tools/**"
             ],
             "forcedInclude": [
-                "/home/bong/.arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/cores/arduino/Arduino.h"
+                "/home/bong/.arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/cores/arduino/Arduino.h",
+                "/Users/bong/Library/Arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/cores/arduino/Arduino.h"
             ],
             "intelliSenseMode": "gcc-x64",
             "compilerPath": "/usr/bin/gcc",

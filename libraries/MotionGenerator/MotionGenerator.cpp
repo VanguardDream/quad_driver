@@ -95,6 +95,18 @@ MotionGenerator::~MotionGenerator()
 void MotionGenerator::init(void)
 {
     internal_ticks = 0;
+
+    for(int iter = 0; iter <4 ; iter++)
+    {
+        qd_legs[iter].leg_mode = 0;
+        qd_legs[iter].leg_troughs = 1;
+        qd_legs[iter].leg_position = 0;
+        qd_legs[iter].leg_velocity = 0;
+        qd_legs[iter].leg_amplitude = 0;
+        qd_legs[iter].leg_duty = 0;
+    }
+            // leg() : leg_mode(0),
+            //     leg_troughs(1), leg_position(0), leg_velocity(0), leg_amplitude(0), leg_duty(0) {}
 }
 
 uint16_t MotionGenerator::returnTheta1(void)
