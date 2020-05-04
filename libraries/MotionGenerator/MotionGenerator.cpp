@@ -8,7 +8,7 @@ void MotionGenerator::setLegsFromMsg(const quadnake_msgs::RemoteDrive &msg)
     {
         qd_legs[iter].leg_amplitude = 3;
         qd_legs[iter].leg_troughs = 1;
-        qd_legs[iter].leg_velocity = msg.FORWARD_DRIVE + ((-1) ^ iter) * msg.ANGULAR_DRIVE;
+        qd_legs[iter].leg_velocity = msg.FORWARD_DRIVE + (pow(-1.0,iter)) * msg.ANGULAR_DRIVE;
     }
 }
 uint32_t MotionGenerator::calTimeDiff(uint32_t t_comming)
