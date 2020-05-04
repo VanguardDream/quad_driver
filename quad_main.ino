@@ -1,4 +1,5 @@
 #include "quadnake.h"
+#define __DEBUG_MSG
 
 void setup()
 {
@@ -46,10 +47,14 @@ void loop()
     }
     if ((t_boot - t_dead[3] >= 1000))
     {
-        mg.motionPlan(t_boot, msg_remote);
+
+        #ifdef __DEBUG_MSG
         char *logmsg;
-        sprintf(logmsg, "%d", mg.returnTheta1());
+        sprintf(logmsg, "Remote msg FW value : %d MG Theta value : %d", msg_remote.FORWARD_DRIVE,mg.returnTheta1());
         nh.loginfo(logmsg);
+        #endif
+
+        mg.motionPlan(t_boot, msg_remote);
 
         t_dead[3] = t_boot;
     }
@@ -105,8 +110,14 @@ uint32_t sensor_read(void)
 
 void remoteCallback(const quadnake_msgs::RemoteDrive &msg)
 {
+    #ifdef __DEBUG_MSG
+    // char* dmsg;
+    // dmsg = "remoteCallback...";
+    // nh.loginfo(dmsg);
+    #endif
+
     cr.receiveCommand(msg);
-    //msg_remote = cr.getRemoteMsg();
+    msg_remote = cr.getRemoteMsg();
 }
 
 void legsDriveCallback(const quadnake_msgs::LegsDrive &msg)

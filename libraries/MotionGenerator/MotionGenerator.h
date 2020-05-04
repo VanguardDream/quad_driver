@@ -13,8 +13,9 @@ private:
         uint8_t leg_troughs;
 
         uint16_t leg_position;
+        uint8_t leg_velocity;
+
         double leg_amplitude;
-        double leg_velocity;
         double leg_duty;
 
         const uint16_t v_leg_link_length[5] = {10, 12, 12, 13, 5};
@@ -25,10 +26,10 @@ private:
         double v_theta[6];
         double h_theta[3];
 
-        // leg() : leg_mode(0),
-        //         leg_troughs(1), leg_position(0), leg_velocity(0), leg_amplitude(0), leg_duty(0) {}
+    };
+    //static qd_legs[4];
 
-    } static qd_legs[4];
+    struct leg *qd_legs;
 
     uint16_t controller_clock = 0;
 

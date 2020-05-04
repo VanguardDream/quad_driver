@@ -25,11 +25,11 @@ void MotionGenerator::setLegPosFromTimeDiff(uint32_t t_diff)
 
     for (int iter = 0; iter < 4; iter++)
     {
-        posDigit[iter] = qd_legs[iter].leg_position + qd_legs[iter].leg_velocity;
-        posDigit[iter] = posDigit[iter] % (2 ^ 16);
+        posDigit[iter] = qd_legs[iter].leg_position + (qd_legs[iter].leg_velocity * t_diff);
+        posDigit[iter] = (uint32_t)posDigit[iter] % (uint32_t)(pow(2.0,16.0));
 
         qd_legs[iter].leg_position = posDigit[iter];
-        qd_legs[iter].leg_duty = posDigit[iter] / (2 ^ 16);
+        qd_legs[iter].leg_duty = (uint32_t)posDigit[iter] / (uint32_t)(pow(2.0,16.0));
     }
 }
 void MotionGenerator::setThetaFromPos(void)
@@ -90,26 +90,27 @@ MotionGenerator::MotionGenerator(/* args */)
 
 MotionGenerator::~MotionGenerator()
 {
+    free(qd_legs);
 }
 
 void MotionGenerator::init(void)
 {
     internal_ticks = 0;
 
+    qd_legs = (leg *) malloc(4*sizeof(leg));
+
     for(int iter = 0; iter <4 ; iter++)
     {
         qd_legs[iter].leg_mode = 0;
         qd_legs[iter].leg_troughs = 1;
-        qd_legs[iter].leg_position = 0;
+        qd_legs[iter].leg_position = 300;
         qd_legs[iter].leg_velocity = 0;
         qd_legs[iter].leg_amplitude = 0;
         qd_legs[iter].leg_duty = 0;
     }
-            // leg() : leg_mode(0),
-            //     leg_troughs(1), leg_position(0), leg_velocity(0), leg_amplitude(0), leg_duty(0) {}
 }
 
 uint16_t MotionGenerator::returnTheta1(void)
 {
-    return qd_legs[0].v_theta[0];
+    return qd_legs[0].leg_duty;
 }
