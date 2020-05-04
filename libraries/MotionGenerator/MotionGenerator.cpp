@@ -8,7 +8,8 @@ void MotionGenerator::setLegsFromMsg(const quadnake_msgs::RemoteDrive &msg)
     {
         qd_legs[iter].leg_amplitude = 3;
         qd_legs[iter].leg_troughs = 1;
-        qd_legs[iter].leg_velocity = msg.FORWARD_DRIVE + (pow(-1.0,iter)) * msg.ANGULAR_DRIVE;
+        //qd_legs[iter].leg_velocity = msg.FORWARD_DRIVE + (pow(-1.0,iter)) * msg.ANGULAR_DRIVE;
+        qd_legs[iter].leg_velocity = msg.FORWARD_DRIVE;
     }
 }
 uint32_t MotionGenerator::calTimeDiff(uint32_t t_comming)
@@ -29,7 +30,7 @@ void MotionGenerator::setLegPosFromTimeDiff(uint32_t t_diff)
         posDigit[iter] = (uint32_t)posDigit[iter] % (uint32_t)(pow(2.0,16.0));
 
         qd_legs[iter].leg_position = posDigit[iter];
-        qd_legs[iter].leg_duty = (uint32_t)posDigit[iter] / (uint32_t)(pow(2.0,16.0));
+        qd_legs[iter].leg_duty = ((double)posDigit[iter] / (double)(pow(2.0,16.0))) * 100;
     }
 }
 void MotionGenerator::setThetaFromPos(void)
@@ -103,7 +104,7 @@ void MotionGenerator::init(void)
     {
         qd_legs[iter].leg_mode = 0;
         qd_legs[iter].leg_troughs = 1;
-        qd_legs[iter].leg_position = 300;
+        qd_legs[iter].leg_position = 0;
         qd_legs[iter].leg_velocity = 0;
         qd_legs[iter].leg_amplitude = 0;
         qd_legs[iter].leg_duty = 0;
