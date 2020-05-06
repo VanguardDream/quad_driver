@@ -27,7 +27,7 @@ void MotionGenerator::setLegPosFromTimeDiff(uint32_t t_diff)
     for (int iter = 0; iter < 4; iter++)
     {
         //posDigit[iter] = qd_legs[iter].leg_position + (qd_legs[iter].leg_velocity * t_diff);
-        posDigit[iter] = qd_legs[iter].leg_position + (qd_legs[iter].leg_velocity * 10);
+        posDigit[iter] = qd_legs[iter].leg_position + (qd_legs[iter].leg_velocity * 40);
         posDigit[iter] = (uint32_t)posDigit[iter] % (uint32_t)(pow(2.0, 16.0));
 
         qd_legs[iter].leg_position = posDigit[iter];

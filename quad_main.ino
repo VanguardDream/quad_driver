@@ -35,8 +35,11 @@ void loop()
     if ((t_boot - t_dead[1]) >= 100)
     {
         ld.setGoalPos(11, mg.getLegsPos(11));
+        ld.setGoalPos(12, 2048);
         ld.setGoalPos(13, mg.getLegsPos(12));
+        ld.setGoalPos(14, 2048);
         ld.setGoalPos(15, mg.getLegsPos(13));
+        ld.setGoalPos(16, 2048);
         ld.setGoalPos(17, mg.getLegsPos(14));
         ld.setGoalPos(18, mg.getLegsPos(15));
         //ld.setGoalPos(0xFE, 2048 + msg_remote.SIDE_DRIVE * 10);
