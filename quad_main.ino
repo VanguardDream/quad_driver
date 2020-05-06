@@ -34,7 +34,12 @@ void loop()
 
     if ((t_boot - t_dead[1]) >= 100)
     {
-        ld.setGoalPos(0xFE, 2048 + msg_remote.SIDE_DRIVE * 10);
+        ld.setGoalPos(11, mg.getLegsPos(11));
+        ld.setGoalPos(13, mg.getLegsPos(12));
+        ld.setGoalPos(15, mg.getLegsPos(13));
+        ld.setGoalPos(17, mg.getLegsPos(14));
+        ld.setGoalPos(18, mg.getLegsPos(15));
+        //ld.setGoalPos(0xFE, 2048 + msg_remote.SIDE_DRIVE * 10);
 
         t_dead[1] = t_boot;
     }
@@ -45,18 +50,26 @@ void loop()
 
         t_dead[2] = t_boot;
     }
-    if ((t_boot - t_dead[3] >= 1000))
+    if ((t_boot - t_dead[3] >= 50))
     {
+        uint32_t tick = micros();
 
-        #ifdef __DEBUG_MSG
+#ifdef __DEBUG_MSG
         char *logmsg;
-        sprintf(logmsg, "Remote msg FW value : %d MG Theta value : %d", msg_remote.FORWARD_DRIVE,mg.returnTheta1());
+        //sprintf(logmsg, "Remote msg FW value : %d MG Theta value : %d", msg_remote.FORWARD_DRIVE, mg.returnTheta1());
+        sprintf(logmsg, "Theta : %d : %d", mg.returnTheta1(), mg.returnLegDuty());
         nh.loginfo(logmsg);
-        #endif
+#endif
 
         mg.motionPlan(t_boot, msg_remote);
 
         t_dead[3] = t_boot;
+
+#ifdef __DEBUG_MSG
+        char *processtime;
+        sprintf(processtime, "motionPlan Processing Time : %d", micros() - tick);
+        //nh.loginfo(processtime);
+#endif
     }
 
     nh.spinOnce();
@@ -110,11 +123,11 @@ uint32_t sensor_read(void)
 
 void remoteCallback(const quadnake_msgs::RemoteDrive &msg)
 {
-    #ifdef __DEBUG_MSG
-    // char* dmsg;
-    // dmsg = "remoteCallback...";
-    // nh.loginfo(dmsg);
-    #endif
+#ifdef __DEBUG_MSG
+// char* dmsg;
+// dmsg = "remoteCallback...";
+// nh.loginfo(dmsg);
+#endif
 
     cr.receiveCommand(msg);
     msg_remote = cr.getRemoteMsg();

@@ -13,7 +13,7 @@ private:
         uint8_t leg_troughs;
 
         uint16_t leg_position;
-        uint8_t leg_velocity;
+        int16_t leg_velocity;
 
         double leg_amplitude;
         double leg_duty;
@@ -25,7 +25,6 @@ private:
 
         double v_theta[6];
         double h_theta[3];
-
     };
     //static qd_legs[4];
 
@@ -44,5 +43,7 @@ public:
     ~MotionGenerator();
     void motionPlan(uint32_t t_init, const quadnake_msgs::RemoteDrive &msg);
     void init(void);
-    uint16_t returnTheta1(void);
+    int32_t returnTheta1(void);
+    uint16_t returnLegDuty(void);
+    uint32_t getLegsPos(uint8_t legid);
 };
