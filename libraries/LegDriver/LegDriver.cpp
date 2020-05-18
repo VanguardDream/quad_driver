@@ -34,6 +34,8 @@ void LegDriver::legInit(void)
     }
 
     setTorque(0xFE, true);
+    
+    setGoalPos(0xFE, 2048);
 }
 void LegDriver::setTorque(uint8_t dxl_id, bool onoff)
 {

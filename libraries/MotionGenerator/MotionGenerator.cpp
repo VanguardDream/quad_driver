@@ -38,47 +38,95 @@ void MotionGenerator::setThetaFromPos(void)
 {
     for (int iter = 0; iter < 4; iter++)
     {
-        int32_t now_pos = qd_legs[iter].leg_position;
-        //ratio :  {13107, 28180, 43254, 59630, 65536}
-        if (now_pos < 13107)
+        if(iter == 0)
         {
-            qd_legs[iter].v_theta[0] = 17.5f + (-0.003768422860561 * (now_pos - 0));
-            qd_legs[iter].v_theta[1] = 0.0f + (0.001104563377274 * (now_pos - 0));
-            qd_legs[iter].v_theta[2] = 0.0f;
-            qd_legs[iter].v_theta[3] = 0.0f;
-            qd_legs[iter].v_theta[4] = 0.0f;
+            int32_t now_pos = qd_legs[iter].leg_position;
+            //ratio :  {13107, 28180, 43254, 59630, 65536}
+            if (now_pos < 13107)
+            {
+                qd_legs[iter].v_theta[0] = (17.5f + (-0.003768422860561 * (now_pos - 0))) * -1;
+                qd_legs[iter].v_theta[1] = (0.0f + (0.001104563377274 * (now_pos - 0))) * -1;
+                qd_legs[iter].v_theta[2] = 0.0f;
+                qd_legs[iter].v_theta[3] = 0.0f;
+                qd_legs[iter].v_theta[4] = 0.0f;
+            }
+            else if (now_pos < 28180)
+            {
+                qd_legs[iter].v_theta[0] = (-32.0f + (0.00327690031403 * (now_pos - 13107))) * -1;
+                qd_legs[iter].v_theta[1] = (14.5f + (-0.002881479238227 * (now_pos - 13107))) * -1;
+                qd_legs[iter].v_theta[2] = (0.0f + (0.000960493079409 * (now_pos - 13107))) * -1;
+                qd_legs[iter].v_theta[3] = 0.0f;
+                qd_legs[iter].v_theta[4] = 0.0f;
+            }
+            else if (now_pos < 43254)
+            {
+                qd_legs[iter].v_theta[0] = (17.5f + (-0.001158126782786 * (now_pos - 28180))) * -1;
+                qd_legs[iter].v_theta[1] = (-29.0f + (0.002881288082645 * (now_pos - 28180))) * -1;
+                qd_legs[iter].v_theta[2] = (14.5f + (-0.002805983028323 * (now_pos - 28180))) * -1;
+                qd_legs[iter].v_theta[3] = (0.0f + (0.00088512430656 * (now_pos - 28180))) * -1;
+                qd_legs[iter].v_theta[4] = 0.0f;
+            }
+            else if (now_pos < 59630)
+            {
+                qd_legs[iter].v_theta[0] = 0.0f;
+                qd_legs[iter].v_theta[1] = (14.5f + (-0.00088363721838 * (now_pos - 43254))) * -1;
+                qd_legs[iter].v_theta[2] = (-28.0f + (0.002581627695859 * (now_pos - 43254))) * -1;
+                qd_legs[iter].v_theta[3] = (13.0f + (-0.003879066481935 * (now_pos - 43254))) * -1;
+                qd_legs[iter].v_theta[4] = (0.0f + (0.002250359963736 * (now_pos - 43254)));
+            }
+            else
+            {
+                qd_legs[iter].v_theta[0] = (0.0f + (0.002959919146104 * (now_pos - 59638))) * -1;
+                qd_legs[iter].v_theta[1] = 0.0f;
+                qd_legs[iter].v_theta[2] = (14.5f + (-0.002454647708703 * (now_pos - 59638))) * -1;
+                qd_legs[iter].v_theta[3] = (-50.0f + (0.008513438698361 * (now_pos - 59638))) * -1;
+                qd_legs[iter].v_theta[4] = (37.0f + (-0.006251254263453 * (now_pos - 59638)));
+            }
         }
-        else if (now_pos < 28180)
+        else if(iter == 1)
         {
-            qd_legs[iter].v_theta[0] = -32.0f + (0.00327690031403 * (now_pos - 13107));
-            qd_legs[iter].v_theta[1] = 14.5f + (-0.002881479238227 * (now_pos - 13107));
-            qd_legs[iter].v_theta[2] = 0.0f + (0.000960493079409 * (now_pos - 13107));
-            qd_legs[iter].v_theta[3] = 0.0f;
-            qd_legs[iter].v_theta[4] = 0.0f;
-        }
-        else if (now_pos < 43254)
-        {
-            qd_legs[iter].v_theta[0] = 17.5f + (-0.001158126782786 * (now_pos - 28180));
-            qd_legs[iter].v_theta[1] = -29.0f + (0.002881288082645 * (now_pos - 28180));
-            qd_legs[iter].v_theta[2] = 14.5f + (-0.002805983028323 * (now_pos - 28180));
-            qd_legs[iter].v_theta[3] = 0.0f + (0.00088512430656 * (now_pos - 28180));
-            qd_legs[iter].v_theta[4] = 0.0f;
-        }
-        else if (now_pos < 59630)
-        {
-            qd_legs[iter].v_theta[0] = 0.0f;
-            qd_legs[iter].v_theta[1] = 14.5f + (-0.00088363721838 * (now_pos - 43254));
-            qd_legs[iter].v_theta[2] = -28.0f + (0.002581627695859 * (now_pos - 43254));
-            qd_legs[iter].v_theta[3] = 13.0f + (-0.003879066481935 * (now_pos - 43254));
-            qd_legs[iter].v_theta[4] = 0.0f + (0.002250359963736 * (now_pos - 43254));
-        }
-        else
-        {
-            qd_legs[iter].v_theta[0] = 0.0f + (0.002959919146104 * (now_pos - 59638));
-            qd_legs[iter].v_theta[1] = 0.0f;
-            qd_legs[iter].v_theta[2] = 14.5f + (-0.002454647708703 * (now_pos - 59638));
-            qd_legs[iter].v_theta[3] = -50.0f + (0.008513438698361 * (now_pos - 59638));
-            qd_legs[iter].v_theta[4] = 37.0f + (-0.006251254263453 * (now_pos - 59638));
+            int32_t now_pos = qd_legs[iter].leg_position;
+            //ratio :  {13107, 28180, 43254, 59630, 65536}
+            if (now_pos < 13107)
+            {
+                qd_legs[iter].v_theta[0] = 17.5f + (-0.003768422860561 * (now_pos - 0));
+                qd_legs[iter].v_theta[1] = 0.0f + (0.001104563377274 * (now_pos - 0));
+                qd_legs[iter].v_theta[2] = 0.0f;
+                qd_legs[iter].v_theta[3] = 0.0f;
+                qd_legs[iter].v_theta[4] = 0.0f;
+            }
+            else if (now_pos < 28180)
+            {
+                qd_legs[iter].v_theta[0] = -32.0f + (0.00327690031403 * (now_pos - 13107));
+                qd_legs[iter].v_theta[1] = 14.5f + (-0.002881479238227 * (now_pos - 13107));
+                qd_legs[iter].v_theta[2] = 0.0f + (0.000960493079409 * (now_pos - 13107));
+                qd_legs[iter].v_theta[3] = 0.0f;
+                qd_legs[iter].v_theta[4] = 0.0f;
+            }
+            else if (now_pos < 43254)
+            {
+                qd_legs[iter].v_theta[0] = 17.5f + (-0.001158126782786 * (now_pos - 28180));
+                qd_legs[iter].v_theta[1] = -29.0f + (0.002881288082645 * (now_pos - 28180));
+                qd_legs[iter].v_theta[2] = 14.5f + (-0.002805983028323 * (now_pos - 28180));
+                qd_legs[iter].v_theta[3] = 0.0f + (0.00088512430656 * (now_pos - 28180));
+                qd_legs[iter].v_theta[4] = 0.0f;
+            }
+            else if (now_pos < 59630)
+            {
+                qd_legs[iter].v_theta[0] = 0.0f;
+                qd_legs[iter].v_theta[1] = 14.5f + (-0.00088363721838 * (now_pos - 43254));
+                qd_legs[iter].v_theta[2] = -28.0f + (0.002581627695859 * (now_pos - 43254));
+                qd_legs[iter].v_theta[3] = 13.0f + (-0.003879066481935 * (now_pos - 43254));
+                qd_legs[iter].v_theta[4] = (0.0f + (0.002250359963736 * (now_pos - 43254))) * -1;
+            }
+            else
+            {
+                qd_legs[iter].v_theta[0] = 0.0f + (0.002959919146104 * (now_pos - 59638));
+                qd_legs[iter].v_theta[1] = 0.0f;
+                qd_legs[iter].v_theta[2] = 14.5f + (-0.002454647708703 * (now_pos - 59638));
+                qd_legs[iter].v_theta[3] = -50.0f + (0.008513438698361 * (now_pos - 59638));
+                qd_legs[iter].v_theta[4] = (37.0f + (-0.006251254263453 * (now_pos - 59638))) * -1;
+            }
         }
     }
 }
@@ -127,21 +175,21 @@ int32_t MotionGenerator::returnTheta1(void)
 
 uint32_t MotionGenerator::getLegsPos(uint8_t legid)
 {
-    if (legid < 10)
+    if (legid < 20)
     {
-        return 2048 + (int32_t)(qd_legs[0].v_theta[legid - 1] / 0.088f);
-    }
-    else if (legid < 20)
-    {
-        return 2048 + (int32_t)(qd_legs[1].v_theta[legid - 11] / 0.088f);
+        return 2048 + (int32_t)(qd_legs[0].v_theta[legid - 11] / 0.088f);
     }
     else if (legid < 30)
     {
-        return 2048 + (int32_t)(qd_legs[2].v_theta[legid - 21] / 0.088f);
+        return 2048 + (int32_t)(qd_legs[1].v_theta[legid - 21] / 0.088f);
     }
     else if (legid < 40)
     {
-        return 2048 + (int32_t)(qd_legs[3].v_theta[legid - 31] / 0.088f);
+        return 2048 + (int32_t)(qd_legs[2].v_theta[legid - 31] / 0.088f);
+    }
+    else if (legid < 50)
+    {
+        return 2048 + (int32_t)(qd_legs[3].v_theta[legid - 41] / 0.088f);
     }
     else
     {

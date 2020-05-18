@@ -55,6 +55,9 @@ ros::Subscriber<quadnake_msgs::LegsDrive> sub_legs("", legsDriveCallback);
 
 LegDriver ld;
 
+//Functions
+
+void legDrive(void);
 /////////////////////////
 /* For Motion Generator */
 
