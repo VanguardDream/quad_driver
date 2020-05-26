@@ -1,5 +1,6 @@
 #include "quadnake.h"
-#define __DEBUG_MSG
+//#define __DEBUG_MSG
+#define __DEBUG_EXET
 
 void setup()
 {
@@ -27,16 +28,37 @@ void loop()
 
     if (((t_boot - t_dead[0]) >= 100))
     {
+
+#ifdef __DEBUG_EXET
+        uint32_t tick = micros();
+#endif
+
         uint32_t t_excution = sensor_read();
 
         t_dead[0] = t_boot;
+
+#ifdef __DEBUG_EXET
+        char *processtime;
+        sprintf(processtime, "Sensor Reading Time : %d", micros() - tick);
+        nh.loginfo(processtime);
+#endif
     }
 
     if ((t_boot - t_dead[1]) >= 100)
     {
+#ifdef __DEBUG_EXET
+        uint32_t tick = micros();
+#endif
+
         //ld.setGoalPos(0xFE, 2048 + msg_remote.SIDE_DRIVE * 10);
         legDrive();
         t_dead[1] = t_boot;
+
+#ifdef __DEBUG_EXET
+        char *processtime;
+        sprintf(processtime, "motor Commanding Time : %d", micros() - tick);
+        nh.loginfo(processtime);
+#endif
     }
 
     if ((t_boot - t_dead[2] >= 500))
@@ -47,7 +69,7 @@ void loop()
     }
     if ((t_boot - t_dead[3] >= 50))
     {
-        uint32_t tick = micros();
+        //uint32_t tick = micros();
 
 #ifdef __DEBUG_MSG
         char *logmsg;
@@ -56,9 +78,20 @@ void loop()
         nh.loginfo(logmsg);
 #endif
 
+#ifdef __DEBUG_EXET
+        uint32_t tick = micros();
+#endif
+
+
         mg.motionPlan(t_boot, msg_remote);
 
         t_dead[3] = t_boot;
+
+#ifdef __DEBUG_EXET
+        char *processtime;
+        sprintf(processtime, "motionPlan Processing Time : %d", micros() - tick);
+        nh.loginfo(processtime);
+#endif
 
 #ifdef __DEBUG_MSG
         char *processtime;
@@ -118,14 +151,18 @@ uint32_t sensor_read(void)
 
 void remoteCallback(const quadnake_msgs::RemoteDrive &msg)
 {
-#ifdef __DEBUG_MSG
-// char* dmsg;
-// dmsg = "remoteCallback...";
-// nh.loginfo(dmsg);
+#ifdef __DEBUG_EXET
+        uint32_t tick = micros();
 #endif
 
     cr.receiveCommand(msg);
     msg_remote = cr.getRemoteMsg();
+
+#ifdef __DEBUG_EXET
+        char *processtime;
+        sprintf(processtime, "Control input Reading Time : %d", micros() - tick);
+        nh.loginfo(processtime);
+#endif
 }
 
 void legsDriveCallback(const quadnake_msgs::LegsDrive &msg)

@@ -32,7 +32,8 @@ void LegDriver::legInit(void)
     {
         SerialBT2.print("Baudrate is not set...");
     }
-
+    setTorque(0xFE, false);
+    
     setTorque(0xFE, true);
     
     setGoalPos(0xFE, 2048);
