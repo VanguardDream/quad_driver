@@ -29,7 +29,7 @@
 
 #define DXL_PROTOCOL_VERSION 2.0 // Dynamixel protocol version 2.0
 
-#define DXL_BAUDRATE 57600 // baurd rate of Dynamixel
+#define DXL_BAUDRATE 1000000 // baurd rate of Dynamixel
 #define DXL_DEVICENAME ""  // no need setting on OpenCR
 
 #define DXL_TORQUE_ENABLE 1  // Value for enabling the torque

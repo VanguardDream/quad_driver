@@ -7,7 +7,7 @@ void setup()
     pinMode(13, OUTPUT); //Arduino LED.
     pinMode(22, OUTPUT); //LED USR 1.
 
-    Serial4.begin(57600);
+    Serial4.begin(1000000);
 
     nh.initNode();
     nh.getHardware()->setBaud(115200);
@@ -44,7 +44,7 @@ void loop()
 #endif
     }
 
-    if ((t_boot - t_dead[1]) >= 100)
+    if ((t_boot - t_dead[1]) >= 50)
     {
 #ifdef __DEBUG_EXET
         uint32_t tick = micros();
@@ -182,7 +182,7 @@ void legDrive(void)
     // ld.setGoalPos(17, mg.getLegsPos(14));
     // ld.setGoalPos(18, mg.getLegsPos(15)); 
     
-    for(int iter = 1; iter < 5 ; iter++)
+    for(int iter = 1; iter < 3 ; iter++)
     {
         ld.setGoalPos(QUAD_LEG_ID(iter,1),mg.getLegsPos(QUAD_LEG_ID(iter,1)));
         ld.setGoalPos(QUAD_LEG_ID(iter,3),mg.getLegsPos(QUAD_LEG_ID(iter,2)));
