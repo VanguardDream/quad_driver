@@ -182,7 +182,7 @@ void legDrive(void)
     // ld.setGoalPos(17, mg.getLegsPos(14));
     // ld.setGoalPos(18, mg.getLegsPos(15)); 
     
-    for(int iter = 1; iter < 3 ; iter++)
+    for(int iter = 1; iter < 5 ; iter++)
     {
         ld.setGoalPos(QUAD_LEG_ID(iter,1),mg.getLegsPos(QUAD_LEG_ID(iter,1)));
         ld.setGoalPos(QUAD_LEG_ID(iter,3),mg.getLegsPos(QUAD_LEG_ID(iter,2)));
