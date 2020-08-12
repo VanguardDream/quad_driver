@@ -1,4 +1,4 @@
-#include "quadnake.h"
+#include "quadnake_ver.h"
 //#define __DEBUG_MSG
 #define __DEBUG_EXET
 
@@ -182,12 +182,14 @@ void legDrive(void)
     // ld.setGoalPos(17, mg.getLegsPos(14));
     // ld.setGoalPos(18, mg.getLegsPos(15)); 
     
-    for(int iter = 1; iter < 5 ; iter++)
+    for(int iter = 1; iter < 2 ; iter++)
     {
         ld.setGoalPos(QUAD_LEG_ID(iter,1),mg.getLegsPos(QUAD_LEG_ID(iter,1)));
-        ld.setGoalPos(QUAD_LEG_ID(iter,3),mg.getLegsPos(QUAD_LEG_ID(iter,2)));
-        ld.setGoalPos(QUAD_LEG_ID(iter,5),mg.getLegsPos(QUAD_LEG_ID(iter,3)));
-        ld.setGoalPos(QUAD_LEG_ID(iter,7),mg.getLegsPos(QUAD_LEG_ID(iter,4)));   
-        ld.setGoalPos(QUAD_LEG_ID(iter,8),mg.getLegsPos(QUAD_LEG_ID(iter,5)));   
+        ld.setGoalPos(QUAD_LEG_ID(iter,2),mg.getLegsPos(QUAD_LEG_ID(iter,2)));
+        ld.setGoalPos(QUAD_LEG_ID(iter,3),mg.getLegsPos(QUAD_LEG_ID(iter,3)));
+        ld.setGoalPos(QUAD_LEG_ID(iter,4),mg.getLegsPos(QUAD_LEG_ID(iter,4)));   
+        ld.setGoalPos(QUAD_LEG_ID(iter,5),mg.getLegsPos(QUAD_LEG_ID(iter,5)));
+        ld.setGoalPos(QUAD_LEG_ID(iter,6),mg.getLegsPos(QUAD_LEG_ID(iter,6)));
+        ld.setGoalPos(QUAD_LEG_ID(iter,7),mg.getLegsPos(QUAD_LEG_ID(iter,7)));   
     }
 }
