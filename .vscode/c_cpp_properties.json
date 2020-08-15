@@ -21,6 +21,16 @@
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c11",
             "cppStandard": "c++17"
+        },
+        {
+            "name": "Mac",
+            "includePath": [
+                "/Users/bong/Library/Arduino15/packages/OpenCR/tools/**",
+                "/Users/bong/Library/Arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/**"
+            ],
+            "forcedInclude": [
+                "/Users/bong/Library/Arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/cores/arduino/Arduino.h"
+            ]
         }
     ],
     "version": 4
