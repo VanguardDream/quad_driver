@@ -13,7 +13,8 @@
                 "/home/bong/.arduino15/packages/OpenCR/hardware/OpenCR/1.4.7/**"
             ],
             "forcedInclude": [
-                "/home/bong/.arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/cores/arduino/Arduino.h"
+                "/home/bong/.arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/cores/arduino/Arduino.h",
+                "/home/bong/.arduino15/packages/OpenCR/hardware/OpenCR/1.4.7/cores/arduino/Arduino.h"
             ],
             "intelliSenseMode": "gcc-x64",
             "compilerPath": "/usr/bin/gcc",

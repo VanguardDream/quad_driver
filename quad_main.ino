@@ -35,15 +35,18 @@ void loop()
 
         uint32_t t_excution = sensor_read();
 
-        int16_t legCurrent[8];
+        int16_t legCurrent = 0;
 
         //For Motor Current Sensing
         for (int idx = 0; idx < 8; idx++)
         {
-            legCurrent[idx] = ld.getPresentCurrent(QUAD_LEG_ID(1, idx));
+            legCurrent = ld.getPresentCurrent(QUAD_LEG_ID(1, idx));
 
             char *motorCurrent;
-            sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1, idx), legCurrent[idx]);
+            sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1, idx), legCurrent);
+            nh.loginfo(motorCurrent);
+
+            legCurrent = 0;
         }
 
         t_dead[0] = t_boot;
@@ -78,7 +81,7 @@ void loop()
 
         t_dead[2] = t_boot;
     }
-    if ((t_boot - t_dead[3] >= 50))
+    if ((t_boot - t_dead[3] >= 350))
     {
         //uint32_t tick = micros();
 
