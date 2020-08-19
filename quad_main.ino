@@ -1,6 +1,6 @@
 #include "quadnake.h"
 //#define __DEBUG_MSG
-#define __DEBUG_EXET
+//#define __DEBUG_EXET
 
 void setup()
 {
@@ -34,6 +34,17 @@ void loop()
 #endif
 
         uint32_t t_excution = sensor_read();
+
+        int16_t legCurrent[8];
+
+        //For Motor Current Sensing
+        for (int idx = 0; idx < 8; idx++)
+        {
+            legCurrent[idx] = ld.getPresentCurrent(QUAD_LEG_ID(1, idx));
+
+            char *motorCurrent;
+            sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1, idx), legCurrent[idx]);
+        }
 
         t_dead[0] = t_boot;
 
@@ -81,7 +92,6 @@ void loop()
 #ifdef __DEBUG_EXET
         uint32_t tick = micros();
 #endif
-
 
         mg.motionPlan(t_boot, msg_remote);
 
@@ -152,16 +162,16 @@ uint32_t sensor_read(void)
 void remoteCallback(const quadnake_msgs::RemoteDrive &msg)
 {
 #ifdef __DEBUG_EXET
-        uint32_t tick = micros();
+    uint32_t tick = micros();
 #endif
 
     cr.receiveCommand(msg);
     msg_remote = cr.getRemoteMsg();
 
 #ifdef __DEBUG_EXET
-        char *processtime;
-        sprintf(processtime, "Control input Reading Time : %d", micros() - tick);
-        nh.loginfo(processtime);
+    char *processtime;
+    sprintf(processtime, "Control input Reading Time : %d", micros() - tick);
+    nh.loginfo(processtime);
 #endif
 }
 
@@ -180,16 +190,16 @@ void legDrive(void)
     // ld.setGoalPos(15, mg.getLegsPos(13));
     // ld.setGoalPos(16, 2048);
     // ld.setGoalPos(17, mg.getLegsPos(14));
-    // ld.setGoalPos(18, mg.getLegsPos(15)); 
-    
-    for(int iter = 1; iter < 2 ; iter++)
+    // ld.setGoalPos(18, mg.getLegsPos(15));
+
+    for (int iter = 1; iter < 2; iter++)
     {
-        ld.setGoalPos(QUAD_LEG_ID(iter,1),mg.getLegsPos(QUAD_LEG_ID(iter,1)));
+        ld.setGoalPos(QUAD_LEG_ID(iter, 1), mg.getLegsPos(QUAD_LEG_ID(iter, 1)));
         //ld.setGoalPos(QUAD_LEG_ID(iter,2),mg.getLegsPos(QUAD_LEG_ID(iter,2)));
-        ld.setGoalPos(QUAD_LEG_ID(iter,3),mg.getLegsPos(QUAD_LEG_ID(iter,3)));
-        //ld.setGoalPos(QUAD_LEG_ID(iter,4),mg.getLegsPos(QUAD_LEG_ID(iter,4)));   
-        ld.setGoalPos(QUAD_LEG_ID(iter,5),mg.getLegsPos(QUAD_LEG_ID(iter,5)));
+        ld.setGoalPos(QUAD_LEG_ID(iter, 3), mg.getLegsPos(QUAD_LEG_ID(iter, 3)));
+        //ld.setGoalPos(QUAD_LEG_ID(iter,4),mg.getLegsPos(QUAD_LEG_ID(iter,4)));
+        ld.setGoalPos(QUAD_LEG_ID(iter, 5), mg.getLegsPos(QUAD_LEG_ID(iter, 5)));
         //ld.setGoalPos(QUAD_LEG_ID(iter,6),mg.getLegsPos(QUAD_LEG_ID(iter,6)));
-        ld.setGoalPos(QUAD_LEG_ID(iter,7),mg.getLegsPos(QUAD_LEG_ID(iter,7)));   
+        ld.setGoalPos(QUAD_LEG_ID(iter, 7), mg.getLegsPos(QUAD_LEG_ID(iter, 7)));
     }
 }
