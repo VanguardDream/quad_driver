@@ -26,7 +26,9 @@
             "name": "Mac",
             "includePath": [
                 "/Users/bong/Library/Arduino15/packages/OpenCR/tools/**",
-                "/Users/bong/Library/Arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/**"
+                "/Users/bong/Library/Arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/**",
+                "${workspaceFolder}/libraries/**",
+                "${workspaceFolder}/**"
             ],
             "forcedInclude": [
                 "/Users/bong/Library/Arduino15/packages/OpenCR/hardware/OpenCR/1.4.15/cores/arduino/Arduino.h"

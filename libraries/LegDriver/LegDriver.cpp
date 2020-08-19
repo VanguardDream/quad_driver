@@ -71,3 +71,11 @@ void LegDriver::setGoalPos(uint8_t dxl_id, uint32_t pos_value)
         dxl_pack->getRxPacketError(dxl_error);
     }
 }
+
+int16_t LegDriver::getPresentCurrent(uint8_t dxl_id)
+{
+    //[Unit = mA]
+    float received_temp_current = dxl_pack->read2ByteTx(dxl_port, dxl_id, ADDR_X_PRESENT_CURRENT);
+
+    return received_temp_current * 2.69;
+}
