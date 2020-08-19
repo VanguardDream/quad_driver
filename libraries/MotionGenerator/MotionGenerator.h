@@ -23,8 +23,7 @@ private:
 
         uint16_t v_leg_total_length;
 
-        double v_theta[6];
-        double h_theta[3];
+        double motor_theta[8];
     };
     //static qd_legs[4];
 
