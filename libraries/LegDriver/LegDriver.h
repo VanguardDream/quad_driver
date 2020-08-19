@@ -16,6 +16,7 @@
 #define ADDR_X_GOAL_VELOCITY 104
 #define ADDR_X_GOAL_POSITION 116
 #define ADDR_X_REALTIME_TICK 120
+#define ADDR_X_PRESENT_CURRENT 126
 #define ADDR_X_PRESENT_VELOCITY 128
 #define ADDR_X_PRESENT_POSITION 132
 
@@ -72,6 +73,8 @@ public:
     void legInit(void);
     void setTorque(uint8_t dxl_id, bool onoff);
     void setGoalPos(uint8_t dxl_id, uint32_t pos_value);
+    int16_t getPresentCurrent(uint8_t dxl_id);
+    
 };
 
 #endif //__MOTOR_DRIVER
