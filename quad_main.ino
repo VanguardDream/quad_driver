@@ -38,16 +38,23 @@ void loop()
         int16_t legCurrent = 0;
 
         //For Motor Current Sensing
-        for (int idx = 0; idx < 8; idx++)
-        {
-            legCurrent = ld.getPresentCurrent(QUAD_LEG_ID(1, idx));
+        // for (int idx = 0; idx < 8; idx++)
+        // {
+        //     legCurrent = ld.getPresentCurrent(QUAD_LEG_ID(1, idx));
 
-            char *motorCurrent;
-            sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1, idx), legCurrent);
-            nh.loginfo(motorCurrent);
+        //     char *motorCurrent;
+        //     sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1, idx), legCurrent);
+        //     nh.loginfo(motorCurrent);
 
-            legCurrent = 0;
-        }
+        //     legCurrent = 0;
+        // }
+
+        legCurrent = ld.getPresentCurrent(15);
+
+        char *motorCurrent;
+        sprintf(motorCurrent, "# %d : %d mA", 18, legCurrent);
+
+        nh.loginfo(motorCurrent);
 
         t_dead[0] = t_boot;
 
