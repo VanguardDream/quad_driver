@@ -13,6 +13,7 @@
 
 // Control table address (Dynamixel X-series)
 #define ADDR_X_TORQUE_ENABLE 64
+#define ADDR_X_STATUS_RETURN_LEVEL 68
 #define ADDR_X_GOAL_VELOCITY 104
 #define ADDR_X_GOAL_POSITION 116
 #define ADDR_X_REALTIME_TICK 120
@@ -30,7 +31,7 @@
 
 #define DXL_PROTOCOL_VERSION 2.0 // Dynamixel protocol version 2.0
 
-#define DXL_BAUDRATE 1000000 // baurd rate of Dynamixel
+#define DXL_BAUDRATE 3000000 // baurd rate of Dynamixel
 #define DXL_DEVICENAME ""  // no need setting on OpenCR
 
 #define DXL_TORQUE_ENABLE 1  // Value for enabling the torque
@@ -73,6 +74,7 @@ public:
     void legInit(void);
     void setTorque(uint8_t dxl_id, bool onoff);
     void setGoalPos(uint8_t dxl_id, uint32_t pos_value);
+    void setStatusLevel(uint8_t dxl_id, uint8_t value);
     int16_t getPresentCurrent(uint8_t dxl_id);
     
 };

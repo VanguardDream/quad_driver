@@ -7,10 +7,10 @@ void setup()
     pinMode(13, OUTPUT); //Arduino LED.
     pinMode(22, OUTPUT); //LED USR 1.
 
-    Serial4.begin(1000000);
+    Serial4.begin(3000000);
 
     nh.initNode();
-    nh.getHardware()->setBaud(115200);
+    nh.getHardware()->setBaud(3000000);
 
     nh.advertise(pub_imu);
     nh.advertise(pub_mag);
@@ -35,26 +35,26 @@ void loop()
 
         uint32_t t_excution = sensor_read();
 
-        int16_t legCurrent = 0;
+        int * legCurrent = (int*)malloc(sizeof(int16_t)*8);
 
-        //For Motor Current Sensing
-        // for (int idx = 0; idx < 8; idx++)
-        // {
-        //     legCurrent = ld.getPresentCurrent(QUAD_LEG_ID(1, idx));
+        ////For Motor Current Sensing
+        for(int idx =  0; idx < 8; idx++)
+        {
+            legCurrent[idx] = ld.getPresentCurrent(QUAD_LEG_ID(1,idx));
+        }
 
-        //     char *motorCurrent;
-        //     sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1, idx), legCurrent);
-        //     nh.loginfo(motorCurrent);
 
-        //     legCurrent = 0;
-        // }
+        // char *motorCurrent;
+        // sprintf(motorCurrent, "# %d : %d mA", 11, legCurrent[1]);
+        // nh.loginfo(motorCurrent);
 
-        legCurrent = ld.getPresentCurrent(15);
+        free(legCurrent);
+        // legCurrent = ld.getPresentCurrent(15);
 
-        char *motorCurrent;
-        sprintf(motorCurrent, "# %d : %d mA", 18, legCurrent);
+        // char *motorCurrent;
+        // sprintf(motorCurrent, "# %d : %d mA", 15, legCurrent);
 
-        nh.loginfo(motorCurrent);
+        // nh.loginfo(motorCurrent);
 
         t_dead[0] = t_boot;
 

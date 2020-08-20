@@ -35,6 +35,8 @@ void LegDriver::legInit(void)
     setTorque(0xFE, false);
 
     setTorque(0xFE, true);
+    
+    setStatusLevel(0xFE,1);
 
     setGoalPos(0xFE, 2048);
 }
@@ -60,7 +62,24 @@ void LegDriver::setGoalPos(uint8_t dxl_id, uint32_t pos_value)
     uint8_t dxl_error;
     int dxl_comm_result = COMM_TX_FAIL;
 
-    dxl_comm_result = dxl_pack->write4ByteTxRx(dxl_port, dxl_id, ADDR_X_GOAL_POSITION, pos_value, &dxl_error);
+    dxl_comm_result = dxl_pack->write4ByteTxOnly(dxl_port, dxl_id, ADDR_X_GOAL_POSITION, pos_value);
+
+    // if (dxl_comm_result != COMM_SUCCESS)
+    // {
+    //     dxl_pack->getTxRxResult(dxl_comm_result);
+    // }
+    // else if (dxl_error != 0)
+    // {
+    //     dxl_pack->getRxPacketError(dxl_error);
+    // }
+}
+
+void LegDriver::setStatusLevel(uint8_t dxl_id, uint8_t value)
+{
+    uint8_t dxl_error;
+    int dxl_comm_result = COMM_TX_FAIL;
+
+    dxl_comm_result = dxl_pack->write1ByteTxRx(dxl_port, dxl_id, ADDR_X_STATUS_RETURN_LEVEL, value, &dxl_error);
 
     if (dxl_comm_result != COMM_SUCCESS)
     {
@@ -75,8 +94,20 @@ void LegDriver::setGoalPos(uint8_t dxl_id, uint32_t pos_value)
 int16_t LegDriver::getPresentCurrent(uint8_t dxl_id)
 {
     //[Unit = mA]
-    int16_t received_temp_current = dxl_pack->read2ByteTx(dxl_port, dxl_id, ADDR_X_PRESENT_CURRENT);
-    delay_us(250); //Double time of trasmitting packets.
+    int dxl_comm_result;
+    uint16_t received_temp_current;
+    uint8_t dxl_error;
+
+    dxl_comm_result = dxl_pack->read2ByteTxRx(dxl_port, dxl_id, ADDR_X_PRESENT_CURRENT,&received_temp_current,&dxl_error);
+
+    if (dxl_comm_result != COMM_SUCCESS)
+    {
+        dxl_pack->getTxRxResult(dxl_comm_result);
+    }
+    else if (dxl_error != 0)
+    {
+        dxl_pack->getRxPacketError(dxl_error);
+    }
 
     return received_temp_current;
 }
