@@ -33,9 +33,9 @@ void LegDriver::legInit(void)
         SerialBT2.print("Baudrate is not set...");
     }
     setTorque(0xFE, false);
-    
+
     setTorque(0xFE, true);
-    
+
     setGoalPos(0xFE, 2048);
 }
 void LegDriver::setTorque(uint8_t dxl_id, bool onoff)
@@ -76,6 +76,7 @@ int16_t LegDriver::getPresentCurrent(uint8_t dxl_id)
 {
     //[Unit = mA]
     int16_t received_temp_current = dxl_pack->read2ByteTx(dxl_port, dxl_id, ADDR_X_PRESENT_CURRENT);
+    delay_us(250); //Double time of trasmitting packets.
 
     return received_temp_current;
 }
