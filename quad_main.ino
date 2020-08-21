@@ -35,26 +35,26 @@ void loop()
 
         uint32_t t_excution = sensor_read();
 
-        int * legCurrent = (int*)malloc(sizeof(int16_t)*8);
+        int16_t *legCurrent = (int16_t *)malloc(sizeof(int16_t) * 8);
 
-        ////For Motor Current Sensing
-        for(int idx =  0; idx < 8; idx++)
+        // ////For Motor Current Sensing
+        // for(int idx =  0; idx < 8; idx++)
+        // {
+        //     legCurrent[idx] = ld.getPresentCurrent(QUAD_LEG_ID(1,idx));
+        // }
+        ld.getGroupPresentCurrent(1,legCurrent);
+
+        for(int idx = 1; idx < 8; idx++)
         {
-            legCurrent[idx] = ld.getPresentCurrent(QUAD_LEG_ID(1,idx));
+            char *motorCurrent;
+            sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1,idx), legCurrent[idx]);
+            nh.loginfo(motorCurrent);
         }
-
-
         // char *motorCurrent;
-        // sprintf(motorCurrent, "# %d : %d mA", 11, legCurrent[1]);
+        // sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1,1), legCurrent[1]);
         // nh.loginfo(motorCurrent);
 
         free(legCurrent);
-        // legCurrent = ld.getPresentCurrent(15);
-
-        // char *motorCurrent;
-        // sprintf(motorCurrent, "# %d : %d mA", 15, legCurrent);
-
-        // nh.loginfo(motorCurrent);
 
         t_dead[0] = t_boot;
 
