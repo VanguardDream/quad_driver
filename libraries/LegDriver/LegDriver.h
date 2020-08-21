@@ -28,11 +28,12 @@
 #define LEN_X_REALTIME_TICK 2
 #define LEN_X_PRESENT_VELOCITY 4
 #define LEN_X_PRESENT_POSITION 4
+#define LEN_X_PRESENT_CURRENT 2
 
 #define DXL_PROTOCOL_VERSION 2.0 // Dynamixel protocol version 2.0
 
 #define DXL_BAUDRATE 3000000 // baurd rate of Dynamixel
-#define DXL_DEVICENAME ""  // no need setting on OpenCR
+#define DXL_DEVICENAME ""    // no need setting on OpenCR
 
 #define DXL_TORQUE_ENABLE 1  // Value for enabling the torque
 #define DXL_TORQUE_DISABLE 0 // Value for disabling the torque
@@ -57,6 +58,10 @@ private:
     dynamixel::PortHandler *dxl_port;
     dynamixel::PacketHandler *dxl_pack;
 
+    dynamixel::GroupSyncRead *dxl_grp_current_reader;
+    dynamixel::GroupSyncRead *dxl_grp_position_reader;
+    dynamixel::GroupSyncRead *dxl_grp_velocity_reader;
+
     /* data */
     uint32_t baudrate;
     float dxl_protocol_version;
@@ -75,8 +80,10 @@ public:
     void setTorque(uint8_t dxl_id, bool onoff);
     void setGoalPos(uint8_t dxl_id, uint32_t pos_value);
     void setStatusLevel(uint8_t dxl_id, uint8_t value);
+
     int16_t getPresentCurrent(uint8_t dxl_id);
-    
+
+    bool getGroupPresentCurrent(uint8_t leg_id, int16_t motorCurrents[]);
 };
 
 #endif //__MOTOR_DRIVER

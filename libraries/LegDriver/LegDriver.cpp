@@ -15,6 +15,8 @@ void LegDriver::legInit(void)
     dxl_port = dynamixel::PortHandler::getPortHandler("");
     dxl_pack = dynamixel::PacketHandler::getPacketHandler(DXL_PROTOCOL_VERSION);
 
+    dxl_grp_current_reader = new dynamixel::GroupSyncRead(dxl_port, dxl_pack, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+
     if (dxl_port->openPort())
     {
         SerialBT2.print("Port is opened...");
@@ -35,8 +37,8 @@ void LegDriver::legInit(void)
     setTorque(0xFE, false);
 
     setTorque(0xFE, true);
-    
-    setStatusLevel(0xFE,1);
+
+    setStatusLevel(0xFE, 1);
 
     setGoalPos(0xFE, 2048);
 }
@@ -98,7 +100,7 @@ int16_t LegDriver::getPresentCurrent(uint8_t dxl_id)
     uint16_t received_temp_current;
     uint8_t dxl_error;
 
-    dxl_comm_result = dxl_pack->read2ByteTxRx(dxl_port, dxl_id, ADDR_X_PRESENT_CURRENT,&received_temp_current,&dxl_error);
+    dxl_comm_result = dxl_pack->read2ByteTxRx(dxl_port, dxl_id, ADDR_X_PRESENT_CURRENT, &received_temp_current, &dxl_error);
 
     if (dxl_comm_result != COMM_SUCCESS)
     {
@@ -110,4 +112,41 @@ int16_t LegDriver::getPresentCurrent(uint8_t dxl_id)
     }
 
     return received_temp_current;
+}
+
+bool LegDriver::getGroupPresentCurrent(uint8_t leg_id, int16_t motorCurrents[])
+{
+    int dxl_comm_result = COMM_TX_FAIL;
+    bool dxl_addparam_result = false;
+    bool dxl_getdate_result = false;
+
+    //Set ID
+    for (int idx = 0; idx < 8; idx++)
+    {
+        dxl_addparam_result = dxl_grp_current_reader->addParam(QUAD_LEG_ID(leg_id, idx));
+        if (dxl_addparam_result != true)
+            return false;
+    }
+
+    //Send instruction Packet
+    dxl_comm_result = dxl_grp_current_reader->txRxPacket();
+    if (dxl_comm_result != COMM_SUCCESS)
+        Serial.println(dxl_pack->getTxRxResult(dxl_comm_result));
+
+    //Get Date from packet
+    for (int idx = 0; idx < 8; idx++)
+    {
+        dxl_addparam_result = dxl_grp_current_reader->isAvailable(QUAD_LEG_ID(leg_id, idx), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+        if (dxl_addparam_result != true)
+            return false;
+    }
+
+    //Parse Need Data
+    for (int idx = 0; idx < 8; idx++)
+    {
+        motorCurrents[idx] = dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, idx), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    }
+
+    dxl_grp_current_reader->clearParam();
+    return true;
 }
