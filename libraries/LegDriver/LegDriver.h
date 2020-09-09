@@ -1,7 +1,6 @@
 #ifndef __MOTOR_DRIVER
 #define __MOTOR_DRIVER
 
-#include <ros.h>
 #include "variant.h"
 #include <DynamixelSDK.h>
 
@@ -9,7 +8,6 @@
 #include <quadnake_msgs/LegsDrive.h>
 #include <quadnake_msgs/LegCommand.h>
 #include <quadnake_msgs/Feed.h>
-#include <quadnake_msgs/DriveFeed.h>
 #include <quadnake_msgs/RemoteDrive.h>
 
 // Control table address (Dynamixel X-series)
@@ -63,8 +61,7 @@ private:
     dynamixel::GroupSyncRead *dxl_grp_position_reader;
     dynamixel::GroupSyncRead *dxl_grp_velocity_reader;
 
-    ros::Publisher pub_feed("Leg Feeds", &Feed_msg);
-
+    quadnake_msgs::Feed Feed_msg;
     /* data */
     uint32_t baudrate;
     float dxl_protocol_version;
@@ -80,18 +77,17 @@ public:
     LegDriver(/* args */);
     ~LegDriver();
 
-    quadnake_msgs::Feed Feed_msg;
 
     void legInit(void);
     void setTorque(uint8_t dxl_id, bool onoff);
     void setGoalPos(uint8_t dxl_id, uint32_t pos_value);
     void setStatusLevel(uint8_t dxl_id, uint8_t value);
 
-    void publishMsg(void);
+    quadnake_msgs::Feed getFeedMsg(void);
 
     int16_t getPresentCurrent(uint8_t dxl_id);
 
-    bool getGroupPresentCurrent(uint8_t leg_id, int16_t motorCurrents[]);
+    bool getGroupPresentCurrent(uint8_t leg_id);
 };
 
 #endif //__MOTOR_DRIVER

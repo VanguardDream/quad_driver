@@ -204,7 +204,7 @@ void MotionGenerator::setThetaFromPos(void)
                 qd_legs[iter].v_theta[0] = 0.0f;
                 qd_legs[iter].v_theta[1] = 0.0f;
                 qd_legs[iter].v_theta[2] = 0.0f;
-                qd_legs[iter].v_theta[3] = 0.0f + 0.010071f * (now_pos - (3000 + 3 * gaitRes));
+                qd_legs[iter].v_theta[3] = 0.0f - 0.010071f * (now_pos - (3000 + 3 * gaitRes));
                 qd_legs[iter].v_theta[4] = -60.0f + 0.025177f * (now_pos - (3000 + 3 * gaitRes));
                 qd_legs[iter].v_theta[5] = 90.0f - 0.020142f * (now_pos - (3000 + 3 * gaitRes));
                 qd_legs[iter].v_theta[6] = -30.0f + 0.005035f * (now_pos - (3000 + 3 * gaitRes));

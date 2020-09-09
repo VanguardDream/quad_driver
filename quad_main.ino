@@ -1,4 +1,4 @@
-#include "quadnake.h"
+#include "quadnake_ver.h"
 //#define __DEBUG_MSG
 //#define __DEBUG_EXET
 
@@ -100,12 +100,12 @@ void loop()
     }
     if ((t_boot - t_dead[4] >= 200))
     {
-        #ifdef __DEBUG_EXET
-            uint32_t tick = micros();
-        #endif
-        int16_t *legCurrent = (int16_t *)malloc(sizeof(int16_t) * 8);
+#ifdef __DEBUG_EXET
+        uint32_t tick = micros();
+#endif
+        t_dead[4] = t_boot;
 
-        ld.getGroupPresentCurrent(1,legCurrent);
+        ld.getGroupPresentCurrent(2);
 
         // for(int idx = 1; idx < 8; idx++)
         // {
@@ -114,15 +114,19 @@ void loop()
         //     nh.loginfo(motorCurrent);
         // }
 
-        free(legCurrent);
+        Feed_msg = ld.getFeedMsg();
+        Feed_msg.header.stamp = nh.now();
+        Feed_msg.header.frame_id = "motor feed back"
 
-        #ifdef __DEBUG_EXET
-            char *processtime;
-            sprintf(processtime, "Motor Reading Time : %d", micros() - tick);
-            nh.loginfo(processtime);
-        #endif
+        pub_feed.publish(&msg_feed);
 
-        t_dead[4] = micros();
+
+#ifdef __DEBUG_EXET
+        char *processtime;
+        sprintf(processtime, "Motor Reading Time : %d", micros() - tick);
+        nh.loginfo(processtime);
+#endif
+
     }
     
     nh.spinOnce();
@@ -207,15 +211,15 @@ void legDrive(void)
     // ld.setGoalPos(17, mg.getLegsPos(14));
     // ld.setGoalPos(18, mg.getLegsPos(15));
 
-    for (int iter = 1; iter < 2; iter++)
+    for (int iter = 2; iter < 3; iter++)
     {
         ld.setGoalPos(QUAD_LEG_ID(iter, 1), mg.getLegsPos(QUAD_LEG_ID(iter, 1)));
-        //ld.setGoalPos(QUAD_LEG_ID(iter, 2), mg.getLegsPos(QUAD_LEG_ID(iter, 2)));
+        ld.setGoalPos(QUAD_LEG_ID(iter, 2), mg.getLegsPos(QUAD_LEG_ID(iter, 2)));
         ld.setGoalPos(QUAD_LEG_ID(iter,3), mg.getLegsPos(QUAD_LEG_ID(iter,3)));
-        //ld.setGoalPos(QUAD_LEG_ID(iter, 4), mg.getLegsPos(QUAD_LEG_ID(iter, 4)));
+        ld.setGoalPos(QUAD_LEG_ID(iter, 4), mg.getLegsPos(QUAD_LEG_ID(iter, 4)));
         ld.setGoalPos(QUAD_LEG_ID(iter,5),mg.getLegsPos(QUAD_LEG_ID(iter,5)));
-        //ld.setGoalPos(QUAD_LEG_ID(iter, 6), mg.getLegsPos(QUAD_LEG_ID(iter, 6)));
+        ld.setGoalPos(QUAD_LEG_ID(iter, 6), mg.getLegsPos(QUAD_LEG_ID(iter, 6)));
         ld.setGoalPos(QUAD_LEG_ID(iter,7),mg.getLegsPos(QUAD_LEG_ID(iter,7)));
-        //ld.setGoalPos(QUAD_LEG_ID(iter, 8), mg.getLegsPos(QUAD_LEG_ID(iter, 8)));
+        ld.setGoalPos(QUAD_LEG_ID(iter, 8), mg.getLegsPos(QUAD_LEG_ID(iter, 8)));
     }
 }
