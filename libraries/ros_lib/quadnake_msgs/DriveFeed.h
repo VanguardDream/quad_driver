@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "ros/msg.h"
+#include "quadnake_msgs/MotorFeed.h"
 
 namespace quadnake_msgs
 {
@@ -16,28 +17,24 @@ namespace quadnake_msgs
       _MODE_type MODE;
       typedef uint8_t _TROUGHS_type;
       _TROUGHS_type TROUGHS;
-      typedef float _POSITION_type;
-      _POSITION_type POSITION;
+      typedef float _CONTACT_POSITION_type;
+      _CONTACT_POSITION_type CONTACT_POSITION;
       typedef float _VELOCITY_type;
       _VELOCITY_type VELOCITY;
       typedef float _AMPLITUDE_type;
       _AMPLITUDE_type AMPLITUDE;
       typedef float _DUTY_type;
       _DUTY_type DUTY;
-      typedef bool _isFault_type;
-      _isFault_type isFault;
-      typedef uint8_t _error_code_type;
-      _error_code_type error_code;
+      quadnake_msgs::MotorFeed MOTORS[8];
 
     DriveFeed():
       MODE(0),
       TROUGHS(0),
-      POSITION(0),
+      CONTACT_POSITION(0),
       VELOCITY(0),
       AMPLITUDE(0),
       DUTY(0),
-      isFault(0),
-      error_code(0)
+      MOTORS()
     {
     }
 
@@ -48,19 +45,13 @@ namespace quadnake_msgs
       offset += sizeof(this->MODE);
       *(outbuffer + offset + 0) = (this->TROUGHS >> (8 * 0)) & 0xFF;
       offset += sizeof(this->TROUGHS);
-      offset += serializeAvrFloat64(outbuffer + offset, this->POSITION);
+      offset += serializeAvrFloat64(outbuffer + offset, this->CONTACT_POSITION);
       offset += serializeAvrFloat64(outbuffer + offset, this->VELOCITY);
       offset += serializeAvrFloat64(outbuffer + offset, this->AMPLITUDE);
       offset += serializeAvrFloat64(outbuffer + offset, this->DUTY);
-      union {
-        bool real;
-        uint8_t base;
-      } u_isFault;
-      u_isFault.real = this->isFault;
-      *(outbuffer + offset + 0) = (u_isFault.base >> (8 * 0)) & 0xFF;
-      offset += sizeof(this->isFault);
-      *(outbuffer + offset + 0) = (this->error_code >> (8 * 0)) & 0xFF;
-      offset += sizeof(this->error_code);
+      for( uint32_t i = 0; i < 8; i++){
+      offset += this->MOTORS[i].serialize(outbuffer + offset);
+      }
       return offset;
     }
 
@@ -71,25 +62,18 @@ namespace quadnake_msgs
       offset += sizeof(this->MODE);
       this->TROUGHS =  ((uint8_t) (*(inbuffer + offset)));
       offset += sizeof(this->TROUGHS);
-      offset += deserializeAvrFloat64(inbuffer + offset, &(this->POSITION));
+      offset += deserializeAvrFloat64(inbuffer + offset, &(this->CONTACT_POSITION));
       offset += deserializeAvrFloat64(inbuffer + offset, &(this->VELOCITY));
       offset += deserializeAvrFloat64(inbuffer + offset, &(this->AMPLITUDE));
       offset += deserializeAvrFloat64(inbuffer + offset, &(this->DUTY));
-      union {
-        bool real;
-        uint8_t base;
-      } u_isFault;
-      u_isFault.base = 0;
-      u_isFault.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      this->isFault = u_isFault.real;
-      offset += sizeof(this->isFault);
-      this->error_code =  ((uint8_t) (*(inbuffer + offset)));
-      offset += sizeof(this->error_code);
+      for( uint32_t i = 0; i < 8; i++){
+      offset += this->MOTORS[i].deserialize(inbuffer + offset);
+      }
      return offset;
     }
 
     const char * getType(){ return "quadnake_msgs/DriveFeed"; };
-    const char * getMD5(){ return "2c60e965d2a7fbfb0f75ae96a9e86c5c"; };
+    const char * getMD5(){ return "e08eb241715a430695aff930b1e5e1de"; };
 
   };
 

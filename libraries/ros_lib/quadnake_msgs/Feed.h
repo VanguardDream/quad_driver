@@ -45,7 +45,7 @@ namespace quadnake_msgs
     }
 
     const char * getType(){ return "quadnake_msgs/Feed"; };
-    const char * getMD5(){ return "e5925c7bafb9ade31996d2fee9f61b9c"; };
+    const char * getMD5(){ return "77bcdcbf271488547426a1cd4f8abe5c"; };
 
   };
 

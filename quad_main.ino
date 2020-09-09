@@ -35,27 +35,6 @@ void loop()
 
         uint32_t t_excution = sensor_read();
 
-        int16_t *legCurrent = (int16_t *)malloc(sizeof(int16_t) * 8);
-
-        // ////For Motor Current Sensing
-        // for(int idx =  0; idx < 8; idx++)
-        // {
-        //     legCurrent[idx] = ld.getPresentCurrent(QUAD_LEG_ID(1,idx));
-        // }
-        ld.getGroupPresentCurrent(1,legCurrent);
-
-        for(int idx = 1; idx < 8; idx++)
-        {
-            char *motorCurrent;
-            sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1,idx), legCurrent[idx]);
-            nh.loginfo(motorCurrent);
-        }
-        // char *motorCurrent;
-        // sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1,1), legCurrent[1]);
-        // nh.loginfo(motorCurrent);
-
-        free(legCurrent);
-
         t_dead[0] = t_boot;
 
 #ifdef __DEBUG_EXET
@@ -119,7 +98,33 @@ void loop()
         //nh.loginfo(processtime);
 #endif
     }
+    if ((t_boot - t_dead[4] >= 200))
+    {
+        #ifdef __DEBUG_EXET
+            uint32_t tick = micros();
+        #endif
+        int16_t *legCurrent = (int16_t *)malloc(sizeof(int16_t) * 8);
 
+        ld.getGroupPresentCurrent(1,legCurrent);
+
+        // for(int idx = 1; idx < 8; idx++)
+        // {
+        //     char *motorCurrent;
+        //     sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1,idx), legCurrent[idx]);
+        //     nh.loginfo(motorCurrent);
+        // }
+
+        free(legCurrent);
+
+        #ifdef __DEBUG_EXET
+            char *processtime;
+            sprintf(processtime, "Motor Reading Time : %d", micros() - tick);
+            nh.loginfo(processtime);
+        #endif
+
+        t_dead[4] = micros();
+    }
+    
     nh.spinOnce();
 
     rosSerialLink(nh.connected());
