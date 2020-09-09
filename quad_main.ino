@@ -114,11 +114,9 @@ void loop()
         //     nh.loginfo(motorCurrent);
         // }
 
-        Feed_msg = ld.getFeedMsg();
-        Feed_msg.header.stamp = nh.now();
-        Feed_msg.header.frame_id = "motor feed back"
+        feed = ld.getFeedMsg();
 
-        pub_feed.publish(&msg_feed);
+        pub_feed.publish(&feed);
 
 
 #ifdef __DEBUG_EXET

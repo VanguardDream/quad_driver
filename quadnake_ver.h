@@ -55,8 +55,8 @@ ros::Subscriber<quadnake_msgs::LegsDrive> sub_legs("", legsDriveCallback);
 
 LegDriver ld;
 
-quadnake_msgs::Feed Feed_msg;
-ros::Publisher pub_feed("leg_feed", &Feed_msg);
+static quadnake_msgs::DriveFeed feed;
+ros::Publisher pub_feed("leg_feed", &feed);
 
 //Functions
 

@@ -62,6 +62,7 @@ private:
     dynamixel::GroupSyncRead *dxl_grp_velocity_reader;
 
     quadnake_msgs::Feed Feed_msg;
+    quadnake_msgs::DriveFeed feed;
     /* data */
     uint32_t baudrate;
     float dxl_protocol_version;
@@ -83,7 +84,7 @@ public:
     void setGoalPos(uint8_t dxl_id, uint32_t pos_value);
     void setStatusLevel(uint8_t dxl_id, uint8_t value);
 
-    quadnake_msgs::Feed getFeedMsg(void);
+    quadnake_msgs::DriveFeed getFeedMsg(void);
 
     int16_t getPresentCurrent(uint8_t dxl_id);
 
