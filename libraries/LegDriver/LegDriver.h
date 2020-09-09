@@ -1,6 +1,7 @@
 #ifndef __MOTOR_DRIVER
 #define __MOTOR_DRIVER
 
+#include <ros.h>
 #include "variant.h"
 #include <DynamixelSDK.h>
 
@@ -62,6 +63,8 @@ private:
     dynamixel::GroupSyncRead *dxl_grp_position_reader;
     dynamixel::GroupSyncRead *dxl_grp_velocity_reader;
 
+    ros::Publisher pub_feed("Leg Feeds", &Feed_msg);
+
     /* data */
     uint32_t baudrate;
     float dxl_protocol_version;
@@ -76,10 +79,15 @@ private:
 public:
     LegDriver(/* args */);
     ~LegDriver();
+
+    quadnake_msgs::Feed Feed_msg;
+
     void legInit(void);
     void setTorque(uint8_t dxl_id, bool onoff);
     void setGoalPos(uint8_t dxl_id, uint32_t pos_value);
     void setStatusLevel(uint8_t dxl_id, uint8_t value);
+
+    void publishMsg(void);
 
     int16_t getPresentCurrent(uint8_t dxl_id);
 

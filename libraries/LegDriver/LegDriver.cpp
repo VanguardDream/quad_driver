@@ -152,15 +152,28 @@ bool LegDriver::getGroupPresentCurrent(uint8_t leg_id, int16_t motorCurrents[])
     //dxl_addparam_result = dxl_grp_current_reader->addParam(QUAD_LEG_ID(1, 1));
     dxl_comm_result = dxl_grp_current_reader->txRxPacket();
     //dxl_addparam_result = dxl_grp_current_reader->isAvailable(QUAD_LEG_ID(1, 1), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    motorCurrents[1] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 1), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    motorCurrents[2] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 2), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    motorCurrents[3] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 3), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    motorCurrents[4] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 4), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    motorCurrents[5] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 5), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    motorCurrents[6] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 6), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    motorCurrents[7] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 7), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    // motorCurrents[1] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 1), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    // motorCurrents[2] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 2), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    // motorCurrents[3] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 3), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    // motorCurrents[4] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 4), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    // motorCurrents[5] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 5), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    // motorCurrents[6] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 6), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    // motorCurrents[7] = dxl_grp_current_reader->getData(QUAD_LEG_ID(1, 7), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+
+    Feed_msg.legs[leg_id].MOTORS[1].CURRENT = dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 1), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    Feed_msg.legs[leg_id].MOTORS[1].CURRENT = dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 2), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    Feed_msg.legs[leg_id].MOTORS[1].CURRENT = dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 3), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    Feed_msg.legs[leg_id].MOTORS[1].CURRENT = dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 4), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    Feed_msg.legs[leg_id].MOTORS[1].CURRENT = dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 5), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    Feed_msg.legs[leg_id].MOTORS[1].CURRENT = dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 6), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    Feed_msg.legs[leg_id].MOTORS[1].CURRENT = dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 7), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
 
     dxl_grp_current_reader->clearParam();
 
     return true;
+}
+
+void LegDriver::publishMsg(void)
+{
+    LegDriver::pub_feed.publish(&Feed_msg);
 }
