@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "ros/msg.h"
+#include "std_msgs/Header.h"
 #include "quadnake_msgs/MotorFeed.h"
 
 namespace quadnake_msgs
@@ -13,6 +14,8 @@ namespace quadnake_msgs
   class DriveFeed : public ros::Msg
   {
     public:
+      typedef std_msgs::Header _DRIVE_FEED_HEAD_type;
+      _DRIVE_FEED_HEAD_type DRIVE_FEED_HEAD;
       typedef uint8_t _MODE_type;
       _MODE_type MODE;
       typedef uint8_t _TROUGHS_type;
@@ -28,6 +31,7 @@ namespace quadnake_msgs
       quadnake_msgs::MotorFeed MOTORS[8];
 
     DriveFeed():
+      DRIVE_FEED_HEAD(),
       MODE(0),
       TROUGHS(0),
       CONTACT_POSITION(0),
@@ -41,6 +45,7 @@ namespace quadnake_msgs
     virtual int serialize(unsigned char *outbuffer) const
     {
       int offset = 0;
+      offset += this->DRIVE_FEED_HEAD.serialize(outbuffer + offset);
       *(outbuffer + offset + 0) = (this->MODE >> (8 * 0)) & 0xFF;
       offset += sizeof(this->MODE);
       *(outbuffer + offset + 0) = (this->TROUGHS >> (8 * 0)) & 0xFF;
@@ -58,6 +63,7 @@ namespace quadnake_msgs
     virtual int deserialize(unsigned char *inbuffer)
     {
       int offset = 0;
+      offset += this->DRIVE_FEED_HEAD.deserialize(inbuffer + offset);
       this->MODE =  ((uint8_t) (*(inbuffer + offset)));
       offset += sizeof(this->MODE);
       this->TROUGHS =  ((uint8_t) (*(inbuffer + offset)));
@@ -73,7 +79,7 @@ namespace quadnake_msgs
     }
 
     const char * getType(){ return "quadnake_msgs/DriveFeed"; };
-    const char * getMD5(){ return "23c19c5edc139f813303000a71e0e97a"; };
+    const char * getMD5(){ return "d8afcb08e75fceecfaa7c979d4ddd228"; };
 
   };
 

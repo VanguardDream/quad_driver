@@ -1,6 +1,6 @@
 #include "quadnake_ver.h"
 //#define __DEBUG_MSG
-//#define __DEBUG_EXET
+#define __DEBUG_EXET
 
 void setup()
 {
@@ -108,24 +108,12 @@ void loop()
 
         ld.getGroupPresentCurrent(2);
 
-        // for(int idx = 1; idx < 8; idx++)
-        // {
-        //     char *motorCurrent;
-        //     sprintf(motorCurrent, "# %d : %d mA", QUAD_LEG_ID(1,idx), legCurrent[idx]);
-        //     nh.loginfo(motorCurrent);
-        // }
-
-        feed = ld.getFeedMsg();
-
-        pub_feed.publish(&feed);
-
-
 #ifdef __DEBUG_EXET
         char *processtime;
         sprintf(processtime, "Motor Reading Time : %d", micros() - tick);
         nh.loginfo(processtime);
 #endif
-
+        legSense();
     }
     
     nh.spinOnce();
@@ -221,4 +209,12 @@ void legDrive(void)
         ld.setGoalPos(QUAD_LEG_ID(iter,7),mg.getLegsPos(QUAD_LEG_ID(iter,7)));
         ld.setGoalPos(QUAD_LEG_ID(iter, 8), mg.getLegsPos(QUAD_LEG_ID(iter, 8)));
     }
+}
+void legSense(void)
+{
+    feed = ld.getFeedMsg();
+    feed.DRIVE_FEED_HEAD.stamp = nh.now();
+    feed.DRIVE_FEED_HEAD.frame_id = "front_right";
+
+    pub_feed.publish(&feed);
 }

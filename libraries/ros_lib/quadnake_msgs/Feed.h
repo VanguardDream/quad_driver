@@ -5,7 +5,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "ros/msg.h"
-#include "std_msgs/Header.h"
 #include "quadnake_msgs/DriveFeed.h"
 
 namespace quadnake_msgs
@@ -14,12 +13,9 @@ namespace quadnake_msgs
   class Feed : public ros::Msg
   {
     public:
-      typedef std_msgs::Header _Header_type;
-      _Header_type Header;
       quadnake_msgs::DriveFeed legs[4];
 
     Feed():
-      Header(),
       legs()
     {
     }
@@ -27,7 +23,6 @@ namespace quadnake_msgs
     virtual int serialize(unsigned char *outbuffer) const
     {
       int offset = 0;
-      offset += this->Header.serialize(outbuffer + offset);
       for( uint32_t i = 0; i < 4; i++){
       offset += this->legs[i].serialize(outbuffer + offset);
       }
@@ -37,7 +32,6 @@ namespace quadnake_msgs
     virtual int deserialize(unsigned char *inbuffer)
     {
       int offset = 0;
-      offset += this->Header.deserialize(inbuffer + offset);
       for( uint32_t i = 0; i < 4; i++){
       offset += this->legs[i].deserialize(inbuffer + offset);
       }
@@ -45,7 +39,7 @@ namespace quadnake_msgs
     }
 
     const char * getType(){ return "quadnake_msgs/Feed"; };
-    const char * getMD5(){ return "4cc9a84121a534f70b7b36ebe9c8a274"; };
+    const char * getMD5(){ return "a012bbbf3b5d9bbbf3bf2240e7ab623c"; };
 
   };
 

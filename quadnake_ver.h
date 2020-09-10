@@ -61,6 +61,7 @@ ros::Publisher pub_feed("leg_feed", &feed);
 //Functions
 
 void legDrive(void);
+void legSense(void);
 /////////////////////////
 /* For Motion Generator */
 
