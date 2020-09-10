@@ -146,14 +146,14 @@ bool LegDriver::getGroupPresentCurrent(uint8_t leg_id)
     // {
     //     motorCurrents[idx] = dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, idx), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
     // }
-    feed.MOTORS[1].ID = QUAD_LEG_ID(leg_id, 1);
-    feed.MOTORS[2].ID = QUAD_LEG_ID(leg_id, 2);
-    feed.MOTORS[3].ID = QUAD_LEG_ID(leg_id, 3);
-    feed.MOTORS[4].ID = QUAD_LEG_ID(leg_id, 4);
-    feed.MOTORS[5].ID = QUAD_LEG_ID(leg_id, 5);
-    feed.MOTORS[6].ID = QUAD_LEG_ID(leg_id, 6);
-    feed.MOTORS[7].ID = QUAD_LEG_ID(leg_id, 7);
-    feed.MOTORS[8].ID = QUAD_LEG_ID(leg_id, 8);
+    feed.MOTORS[0].ID = QUAD_LEG_ID(leg_id, 1);
+    feed.MOTORS[1].ID = QUAD_LEG_ID(leg_id, 2);
+    feed.MOTORS[2].ID = QUAD_LEG_ID(leg_id, 3);
+    feed.MOTORS[3].ID = QUAD_LEG_ID(leg_id, 4);
+    feed.MOTORS[4].ID = QUAD_LEG_ID(leg_id, 5);
+    feed.MOTORS[5].ID = QUAD_LEG_ID(leg_id, 6);
+    feed.MOTORS[6].ID = QUAD_LEG_ID(leg_id, 7);
+    feed.MOTORS[7].ID = QUAD_LEG_ID(leg_id, 8);
 
     //For one node debugginf
     //dxl_addparam_result = dxl_grp_current_reader->addParam(QUAD_LEG_ID(1, 1));
@@ -176,14 +176,14 @@ bool LegDriver::getGroupPresentCurrent(uint8_t leg_id)
     // Feed_msg.legs[leg_id].MOTORS[7].CURRENT = dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 7), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
     // Feed_msg.legs[leg_id].MOTORS[8].CURRENT = dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 8), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
 
-    feed.MOTORS[1].CURRENT = (int32_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 1), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    feed.MOTORS[2].CURRENT = (int32_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 2), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    feed.MOTORS[3].CURRENT = (int32_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 3), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    feed.MOTORS[4].CURRENT = (int32_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 4), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    feed.MOTORS[5].CURRENT = (int32_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 5), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    feed.MOTORS[6].CURRENT = (int32_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 6), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    feed.MOTORS[7].CURRENT = (int32_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 7), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-    feed.MOTORS[8].CURRENT = (int32_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 8), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    feed.MOTORS[0].CURRENT = (int16_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 1), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    feed.MOTORS[1].CURRENT = (int16_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 2), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    feed.MOTORS[2].CURRENT = (int16_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 3), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    feed.MOTORS[3].CURRENT = (int16_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 4), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    feed.MOTORS[4].CURRENT = (int16_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 5), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    feed.MOTORS[5].CURRENT = (int16_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 6), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    feed.MOTORS[6].CURRENT = (int16_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 7), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+    feed.MOTORS[7].CURRENT = (int16_t) dxl_grp_current_reader->getData(QUAD_LEG_ID(leg_id, 8), ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
 
     dxl_grp_current_reader->clearParam();
 

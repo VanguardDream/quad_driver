@@ -73,7 +73,7 @@ namespace quadnake_msgs
     }
 
     const char * getType(){ return "quadnake_msgs/DriveFeed"; };
-    const char * getMD5(){ return "cbc4066466bddae3b8712314d3bb085c"; };
+    const char * getMD5(){ return "23c19c5edc139f813303000a71e0e97a"; };
 
   };
 

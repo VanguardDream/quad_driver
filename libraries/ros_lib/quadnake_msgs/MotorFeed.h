@@ -14,10 +14,14 @@ namespace quadnake_msgs
     public:
       typedef uint8_t _ID_type;
       _ID_type ID;
-      typedef int32_t _CURRENT_type;
+      typedef int16_t _CURRENT_type;
       _CURRENT_type CURRENT;
       typedef int32_t _POSITION_type;
       _POSITION_type POSITION;
+      typedef int32_t _VELOCITY_type;
+      _VELOCITY_type VELOCITY;
+      typedef int32_t _ACCELATION_type;
+      _ACCELATION_type ACCELATION;
       typedef bool _isFault_type;
       _isFault_type isFault;
       typedef uint8_t _error_code_type;
@@ -27,6 +31,8 @@ namespace quadnake_msgs
       ID(0),
       CURRENT(0),
       POSITION(0),
+      VELOCITY(0),
+      ACCELATION(0),
       isFault(0),
       error_code(0)
     {
@@ -38,14 +44,12 @@ namespace quadnake_msgs
       *(outbuffer + offset + 0) = (this->ID >> (8 * 0)) & 0xFF;
       offset += sizeof(this->ID);
       union {
-        int32_t real;
-        uint32_t base;
+        int16_t real;
+        uint16_t base;
       } u_CURRENT;
       u_CURRENT.real = this->CURRENT;
       *(outbuffer + offset + 0) = (u_CURRENT.base >> (8 * 0)) & 0xFF;
       *(outbuffer + offset + 1) = (u_CURRENT.base >> (8 * 1)) & 0xFF;
-      *(outbuffer + offset + 2) = (u_CURRENT.base >> (8 * 2)) & 0xFF;
-      *(outbuffer + offset + 3) = (u_CURRENT.base >> (8 * 3)) & 0xFF;
       offset += sizeof(this->CURRENT);
       union {
         int32_t real;
@@ -57,6 +61,26 @@ namespace quadnake_msgs
       *(outbuffer + offset + 2) = (u_POSITION.base >> (8 * 2)) & 0xFF;
       *(outbuffer + offset + 3) = (u_POSITION.base >> (8 * 3)) & 0xFF;
       offset += sizeof(this->POSITION);
+      union {
+        int32_t real;
+        uint32_t base;
+      } u_VELOCITY;
+      u_VELOCITY.real = this->VELOCITY;
+      *(outbuffer + offset + 0) = (u_VELOCITY.base >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (u_VELOCITY.base >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (u_VELOCITY.base >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (u_VELOCITY.base >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->VELOCITY);
+      union {
+        int32_t real;
+        uint32_t base;
+      } u_ACCELATION;
+      u_ACCELATION.real = this->ACCELATION;
+      *(outbuffer + offset + 0) = (u_ACCELATION.base >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (u_ACCELATION.base >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (u_ACCELATION.base >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (u_ACCELATION.base >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->ACCELATION);
       union {
         bool real;
         uint8_t base;
@@ -75,14 +99,12 @@ namespace quadnake_msgs
       this->ID =  ((uint8_t) (*(inbuffer + offset)));
       offset += sizeof(this->ID);
       union {
-        int32_t real;
-        uint32_t base;
+        int16_t real;
+        uint16_t base;
       } u_CURRENT;
       u_CURRENT.base = 0;
-      u_CURRENT.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      u_CURRENT.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
-      u_CURRENT.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
-      u_CURRENT.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      u_CURRENT.base |= ((uint16_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_CURRENT.base |= ((uint16_t) (*(inbuffer + offset + 1))) << (8 * 1);
       this->CURRENT = u_CURRENT.real;
       offset += sizeof(this->CURRENT);
       union {
@@ -97,6 +119,28 @@ namespace quadnake_msgs
       this->POSITION = u_POSITION.real;
       offset += sizeof(this->POSITION);
       union {
+        int32_t real;
+        uint32_t base;
+      } u_VELOCITY;
+      u_VELOCITY.base = 0;
+      u_VELOCITY.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_VELOCITY.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_VELOCITY.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      u_VELOCITY.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      this->VELOCITY = u_VELOCITY.real;
+      offset += sizeof(this->VELOCITY);
+      union {
+        int32_t real;
+        uint32_t base;
+      } u_ACCELATION;
+      u_ACCELATION.base = 0;
+      u_ACCELATION.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_ACCELATION.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_ACCELATION.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      u_ACCELATION.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      this->ACCELATION = u_ACCELATION.real;
+      offset += sizeof(this->ACCELATION);
+      union {
         bool real;
         uint8_t base;
       } u_isFault;
@@ -110,7 +154,7 @@ namespace quadnake_msgs
     }
 
     const char * getType(){ return "quadnake_msgs/MotorFeed"; };
-    const char * getMD5(){ return "3316b417a89cf42bcc729338c3e543f6"; };
+    const char * getMD5(){ return "71d4bc26430d23c44eeb70a2a00d76ec"; };
 
   };
 
