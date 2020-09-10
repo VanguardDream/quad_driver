@@ -14,7 +14,7 @@ namespace quadnake_msgs
     public:
       typedef uint8_t _ID_type;
       _ID_type ID;
-      typedef int16_t _CURRENT_type;
+      typedef int32_t _CURRENT_type;
       _CURRENT_type CURRENT;
       typedef int32_t _POSITION_type;
       _POSITION_type POSITION;
@@ -38,12 +38,14 @@ namespace quadnake_msgs
       *(outbuffer + offset + 0) = (this->ID >> (8 * 0)) & 0xFF;
       offset += sizeof(this->ID);
       union {
-        int16_t real;
-        uint16_t base;
+        int32_t real;
+        uint32_t base;
       } u_CURRENT;
       u_CURRENT.real = this->CURRENT;
       *(outbuffer + offset + 0) = (u_CURRENT.base >> (8 * 0)) & 0xFF;
       *(outbuffer + offset + 1) = (u_CURRENT.base >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (u_CURRENT.base >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (u_CURRENT.base >> (8 * 3)) & 0xFF;
       offset += sizeof(this->CURRENT);
       union {
         int32_t real;
@@ -73,12 +75,14 @@ namespace quadnake_msgs
       this->ID =  ((uint8_t) (*(inbuffer + offset)));
       offset += sizeof(this->ID);
       union {
-        int16_t real;
-        uint16_t base;
+        int32_t real;
+        uint32_t base;
       } u_CURRENT;
       u_CURRENT.base = 0;
-      u_CURRENT.base |= ((uint16_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      u_CURRENT.base |= ((uint16_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_CURRENT.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_CURRENT.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_CURRENT.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      u_CURRENT.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
       this->CURRENT = u_CURRENT.real;
       offset += sizeof(this->CURRENT);
       union {
@@ -106,7 +110,7 @@ namespace quadnake_msgs
     }
 
     const char * getType(){ return "quadnake_msgs/MotorFeed"; };
-    const char * getMD5(){ return "62b35166123fe9853fe829e5111311da"; };
+    const char * getMD5(){ return "3316b417a89cf42bcc729338c3e543f6"; };
 
   };
 

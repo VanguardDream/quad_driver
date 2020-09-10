@@ -14,6 +14,7 @@ void setup()
 
     nh.advertise(pub_imu);
     nh.advertise(pub_mag);
+    nh.advertise(pub_feed);
 
     nh.subscribe(sub_remote);
 
