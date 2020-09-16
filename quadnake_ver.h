@@ -57,6 +57,7 @@ LegDriver ld;
 
 static quadnake_msgs::DriveFeed feed;
 ros::Publisher pub_feed("leg_feed", &feed);
+uint32_t seq_leg_feed = 0;
 
 //Functions
 

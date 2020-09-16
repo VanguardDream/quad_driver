@@ -213,6 +213,7 @@ void legDrive(void)
 void legSense(void)
 {
     feed = ld.getFeedMsg();
+    feed.DRIVE_FEED_HEAD.seq = seq_leg_feed++;
     feed.DRIVE_FEED_HEAD.stamp = nh.now();
     feed.DRIVE_FEED_HEAD.frame_id = "front_right";
 
